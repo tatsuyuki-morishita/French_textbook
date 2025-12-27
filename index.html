@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn French - Complete A0-A2 Course</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="flag">🇫🇷</span>
+                <h1>Français</h1>
+            </div>
+            <p class="tagline">A0 → A2 Journey</p>
+        </div>
+
+        <div class="progress-overview">
+            <div class="progress-bar">
+                <div class="progress-fill" id="overallProgress"></div>
+            </div>
+            <span class="progress-text">0% Complete</span>
+        </div>
+
+        <div class="nav-sections">
+            <!-- Foundation -->
+            <div class="nav-category">
+                <h3><i class="fas fa-seedling"></i> Foundation (A0)</h3>
+                <ul>
+                    <li class="nav-item active" data-section="1">
+                        <span class="section-number">1</span>
+                        <span class="section-title">Introducing Yourself & Alphabet</span>
+                        <span class="duration">55 min</span>
+                    </li>
+                    <li class="nav-item" data-section="2">
+                        <span class="section-number">2</span>
+                        <span class="section-title">Nationalities & Être</span>
+                        <span class="duration">26 min</span>
+                    </li>
+                    <li class="nav-item" data-section="3">
+                        <span class="section-number">3</span>
+                        <span class="section-title">Greetings & Goodbye</span>
+                        <span class="duration">21 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Building Blocks -->
+            <div class="nav-category">
+                <h3><i class="fas fa-cubes"></i> Building Blocks (A0-A1)</h3>
+                <ul>
+                    <li class="nav-item" data-section="4">
+                        <span class="section-number">4</span>
+                        <span class="section-title">Numbers Part 1</span>
+                        <span class="duration">23 min</span>
+                    </li>
+                    <li class="nav-item" data-section="5">
+                        <span class="section-number">5</span>
+                        <span class="section-title">Talking About Yourself 1</span>
+                        <span class="duration">28 min</span>
+                    </li>
+                    <li class="nav-item" data-section="6">
+                        <span class="section-number">6</span>
+                        <span class="section-title">Talking About Yourself 2</span>
+                        <span class="duration">24 min</span>
+                    </li>
+                    <li class="nav-item" data-section="7">
+                        <span class="section-number">7</span>
+                        <span class="section-title">Articles</span>
+                        <span class="duration">22 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Communication -->
+            <div class="nav-category">
+                <h3><i class="fas fa-comments"></i> Communication (A1)</h3>
+                <ul>
+                    <li class="nav-item" data-section="8">
+                        <span class="section-number">8</span>
+                        <span class="section-title">Family</span>
+                        <span class="duration">41 min</span>
+                    </li>
+                    <li class="nav-item" data-section="9">
+                        <span class="section-number">9</span>
+                        <span class="section-title">Asking Questions</span>
+                        <span class="duration">26 min</span>
+                    </li>
+                    <li class="nav-item" data-section="10">
+                        <span class="section-number">10</span>
+                        <span class="section-title">Numbers Part 2</span>
+                        <span class="duration">27 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Practical Topics -->
+            <div class="nav-category">
+                <h3><i class="fas fa-map-signs"></i> Practical Topics (A1)</h3>
+                <ul>
+                    <li class="nav-item" data-section="11">
+                        <span class="section-number">11</span>
+                        <span class="section-title">Describing Your City</span>
+                        <span class="duration">30 min</span>
+                    </li>
+                    <li class="nav-item" data-section="12">
+                        <span class="section-number">12</span>
+                        <span class="section-title">Understanding Directions</span>
+                        <span class="duration">34 min</span>
+                    </li>
+                    <li class="nav-item" data-section="13">
+                        <span class="section-number">13</span>
+                        <span class="section-title">Preferences & Activities</span>
+                        <span class="duration">39 min</span>
+                    </li>
+                    <li class="nav-item" data-section="14">
+                        <span class="section-number">14</span>
+                        <span class="section-title">Hotel Booking</span>
+                        <span class="duration">39 min</span>
+                    </li>
+                    <li class="nav-item" data-section="15">
+                        <span class="section-number">15</span>
+                        <span class="section-title">Comprehensive Review</span>
+                        <span class="duration">50 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Real-Life Scenarios -->
+            <div class="nav-category">
+                <h3><i class="fas fa-users"></i> Real-Life Scenarios (A1-A2)</h3>
+                <ul>
+                    <li class="nav-item" data-section="16">
+                        <span class="section-number">16</span>
+                        <span class="section-title">Suggesting an Outing 1</span>
+                        <span class="duration">51 min</span>
+                    </li>
+                    <li class="nav-item" data-section="17">
+                        <span class="section-number">17</span>
+                        <span class="section-title">Suggesting an Outing 2</span>
+                        <span class="duration">40 min</span>
+                    </li>
+                    <li class="nav-item" data-section="18">
+                        <span class="section-number">18</span>
+                        <span class="section-title">Personality & Appearance</span>
+                        <span class="duration">34 min</span>
+                    </li>
+                    <li class="nav-item" data-section="19">
+                        <span class="section-number">19</span>
+                        <span class="section-title">Shopping</span>
+                        <span class="duration">42 min</span>
+                    </li>
+                    <li class="nav-item" data-section="20">
+                        <span class="section-number">20</span>
+                        <span class="section-title">Daily Routine 1</span>
+                        <span class="duration">35 min</span>
+                    </li>
+                    <li class="nav-item" data-section="21">
+                        <span class="section-number">21</span>
+                        <span class="section-title">Daily Routine 2</span>
+                        <span class="duration">39 min</span>
+                    </li>
+                    <li class="nav-item" data-section="22">
+                        <span class="section-number">22</span>
+                        <span class="section-title">Holidays</span>
+                        <span class="duration">39 min</span>
+                    </li>
+                    <li class="nav-item" data-section="23">
+                        <span class="section-number">23</span>
+                        <span class="section-title">At the Doctor's</span>
+                        <span class="duration">28 min</span>
+                    </li>
+                    <li class="nav-item" data-section="24">
+                        <span class="section-number">24</span>
+                        <span class="section-title">Food & Dining</span>
+                        <span class="duration">48 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Advanced Grammar -->
+            <div class="nav-category">
+                <h3><i class="fas fa-graduation-cap"></i> Advanced Grammar (A2)</h3>
+                <ul>
+                    <li class="nav-item" data-section="25">
+                        <span class="section-number">25</span>
+                        <span class="section-title">Giving Advice</span>
+                        <span class="duration">25 min</span>
+                    </li>
+                    <li class="nav-item" data-section="26">
+                        <span class="section-number">26</span>
+                        <span class="section-title">Question Forms</span>
+                        <span class="duration">25 min</span>
+                    </li>
+                    <li class="nav-item" data-section="27">
+                        <span class="section-number">27</span>
+                        <span class="section-title">Future Tense</span>
+                        <span class="duration">25 min</span>
+                    </li>
+                    <li class="nav-item" data-section="28">
+                        <span class="section-number">28</span>
+                        <span class="section-title">Tense Review</span>
+                        <span class="duration">30 min</span>
+                    </li>
+                    <li class="nav-item" data-section="29">
+                        <span class="section-number">29</span>
+                        <span class="section-title">Sentence Construction</span>
+                        <span class="duration">40 min</span>
+                    </li>
+                    <li class="nav-item" data-section="30">
+                        <span class="section-number">30</span>
+                        <span class="section-title">Next Steps</span>
+                        <span class="duration">10 min</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Bonus Section -->
+            <div class="nav-category">
+                <h3><i class="fas fa-heart"></i> Bonus Content</h3>
+                <ul>
+                    <li class="nav-item" data-section="31">
+                        <span class="section-number">31</span>
+                        <span class="section-title">Dating & Fun Phrases</span>
+                        <span class="duration">45 min</span>
+                    </li>
+                    <li class="nav-item" data-section="32">
+                        <span class="section-number">32</span>
+                        <span class="section-title">Slang & Swear Words</span>
+                        <span class="duration">40 min</span>
+                    </li>
+                    <li class="nav-item" data-section="33">
+                        <span class="section-number">33</span>
+                        <span class="section-title">Everyday Native Expressions</span>
+                        <span class="duration">50 min</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sidebar-footer">
+            <button class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i> Dark Mode
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content Area -->
+    <main class="content" id="mainContent">
+        <!-- Content will be loaded dynamically -->
+    </main>
+
+    <!-- Audio Player (hidden) -->
+    <audio id="audioPlayer"></audio>
+
+    <!-- Section Content Files -->
+    <script src="content/section1.js"></script>
+    <script src="content/section2.js"></script>
+    <script src="content/section3.js"></script>
+    <script src="content/section4.js"></script>
+    <script src="content/section5.js"></script>
+    <script src="content/section6.js"></script>
+    <script src="content/section7.js"></script>
+    <script src="content/section8.js"></script>
+    <script src="content/section9.js"></script>
+    <script src="content/section10.js"></script>
+    <script src="content/section11.js"></script>
+    <script src="content/section12.js"></script>
+    <script src="content/section13.js"></script>
+    <script src="content/section14.js"></script>
+    <script src="content/section15.js"></script>
+    <script src="content/section16.js"></script>
+    <script src="content/section17.js"></script>
+    <script src="content/section18.js"></script>
+    <script src="content/section19.js"></script>
+    <script src="content/section20.js"></script>
+    <script src="content/section21.js"></script>
+    <script src="content/section22.js"></script>
+    <script src="content/section23.js"></script>
+    <script src="content/section24.js"></script>
+    <script src="content/section25.js"></script>
+    <script src="content/section26.js"></script>
+    <script src="content/section27.js"></script>
+    <script src="content/section28.js"></script>
+    <script src="content/section29.js"></script>
+    <script src="content/section30.js"></script>
+    <script src="content/section31.js"></script>
+    <script src="content/section32.js"></script>
+    <script src="content/section33.js"></script>
+
+    <!-- Main Application -->
+    <script src="content.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

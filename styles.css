@@ -1276,6 +1276,13 @@ body {
 
     body {
         padding-bottom: var(--safe-area-bottom);
+        overflow-x: hidden;
+    }
+
+    /* Prevent horizontal overflow */
+    .content {
+        overflow-x: hidden;
+        width: 100%;
     }
 
     /* Mobile menu button - larger touch target */
@@ -1545,9 +1552,13 @@ body {
         gap: var(--spacing-sm);
     }
 
+    .vocab-image-card {
+        border-radius: var(--radius-md);
+    }
+
     .vocab-image-card .image-placeholder {
-        height: 100px;
-        font-size: 2.5rem;
+        height: 80px;
+        font-size: 2rem;
     }
 
     .vocab-image-card .vocab-info {
@@ -1555,11 +1566,11 @@ body {
     }
 
     .vocab-image-card .vocab-french {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
     }
 
     .vocab-image-card .vocab-english {
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
 
     /* Dialogue box */

@@ -51,8 +51,12 @@ function goToSection(sectionId) {
     document.getElementById('mainContent').scrollTo(0, 0);
     window.scrollTo(0, 0);
 
-    // Close mobile menu
+    // Close mobile menu and backdrop
     document.getElementById('sidebar').classList.remove('active');
+    const backdrop = document.getElementById('sidebarBackdrop');
+    if (backdrop) {
+        backdrop.classList.remove('active');
+    }
 }
 
 function loadSection(sectionId) {
@@ -291,16 +295,32 @@ function checkFillBlank(input, correctAnswer) {
 function setupMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const sidebar = document.getElementById('sidebar');
+    const backdrop = document.getElementById('sidebarBackdrop');
 
     if (menuToggle && sidebar) {
+        // Toggle menu
         menuToggle.addEventListener('click', () => {
             sidebar.classList.toggle('active');
+            if (backdrop) {
+                backdrop.classList.toggle('active');
+            }
         });
+
+        // Close menu when clicking backdrop
+        if (backdrop) {
+            backdrop.addEventListener('click', () => {
+                sidebar.classList.remove('active');
+                backdrop.classList.remove('active');
+            });
+        }
 
         // Close menu when clicking outside
         document.addEventListener('click', (e) => {
             if (!sidebar.contains(e.target) && !menuToggle.contains(e.target)) {
                 sidebar.classList.remove('active');
+                if (backdrop) {
+                    backdrop.classList.remove('active');
+                }
             }
         });
     }

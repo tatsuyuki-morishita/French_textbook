@@ -292,6 +292,27 @@ body {
     box-shadow: 0 2px 10px var(--shadow-color);
 }
 
+/* Mobile sidebar backdrop overlay */
+.sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+}
+
+.sidebar-backdrop.active {
+    display: block;
+    opacity: 1;
+}
+
 /* ============================================
    Main Content Area
    ============================================ */
@@ -1184,6 +1205,14 @@ body {
    Responsive Design
    ============================================ */
 
+/* Safe area support for iPhone notch/Dynamic Island */
+:root {
+    --safe-area-top: env(safe-area-inset-top, 0px);
+    --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+    --safe-area-left: env(safe-area-inset-left, 0px);
+    --safe-area-right: env(safe-area-inset-right, 0px);
+}
+
 @media (max-width: 1024px) {
     .sidebar {
         transform: translateX(-100%);
@@ -1200,7 +1229,7 @@ body {
     .content {
         margin-left: 0;
         padding: var(--spacing-xl);
-        padding-top: calc(var(--spacing-xl) + 60px);
+        padding-top: calc(var(--spacing-xl) + 60px + var(--safe-area-top));
     }
 }
 
@@ -1229,6 +1258,402 @@ body {
     .cultural-note {
         flex-direction: column;
         text-align: center;
+    }
+}
+
+/* ============================================
+   iPhone Optimizations (390-430px width range)
+   iPhone 16: 393pt, iPhone 16 Pro: 402pt, iPhone 16 Pro Max: 440pt
+   ============================================ */
+
+@media (max-width: 430px) {
+    /* Base adjustments */
+    html {
+        font-size: 15px;
+        -webkit-text-size-adjust: 100%;
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+        padding-bottom: var(--safe-area-bottom);
+    }
+
+    /* Mobile menu button - larger touch target */
+    .mobile-menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        top: calc(var(--spacing-md) + var(--safe-area-top));
+        left: var(--spacing-md);
+        width: 48px;
+        height: 48px;
+        font-size: 1.2rem;
+        border-radius: var(--radius-lg);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* Sidebar mobile overlay */
+    .sidebar {
+        width: 85vw;
+        max-width: 320px;
+        padding-top: var(--safe-area-top);
+    }
+
+    .sidebar.active {
+        box-shadow: 4px 0 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .sidebar-header {
+        padding: var(--spacing-lg) var(--spacing-md);
+    }
+
+    .logo h1 {
+        font-size: 1.5rem;
+    }
+
+    /* Navigation items - larger touch targets */
+    .nav-item {
+        padding: var(--spacing-md) var(--spacing-lg);
+        min-height: 48px;
+    }
+
+    .section-title {
+        font-size: 0.9rem;
+    }
+
+    .duration {
+        font-size: 0.65rem;
+        padding: 2px 5px;
+    }
+
+    /* Main content */
+    .content {
+        padding: var(--spacing-md);
+        padding-top: calc(70px + var(--safe-area-top));
+        padding-bottom: calc(var(--spacing-xl) + var(--safe-area-bottom));
+    }
+
+    /* Section header */
+    .section-header {
+        margin-bottom: var(--spacing-lg);
+        padding-bottom: var(--spacing-md);
+    }
+
+    .section-header h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+
+    .section-header .french-title {
+        font-size: 1rem;
+    }
+
+    .section-meta {
+        flex-wrap: wrap;
+        gap: var(--spacing-sm);
+        font-size: 0.8rem;
+    }
+
+    .section-badge {
+        font-size: 0.75rem;
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+
+    /* Content cards */
+    .content-card {
+        padding: var(--spacing-md);
+        margin-bottom: var(--spacing-md);
+        border-radius: var(--radius-md);
+    }
+
+    .content-card h2 {
+        font-size: 1.2rem;
+        margin-bottom: var(--spacing-md);
+    }
+
+    .content-card h3 {
+        font-size: 1.1rem;
+    }
+
+    .content-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+    }
+
+    /* Phrase cards - full width on mobile */
+    .phrase-grid {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-md);
+    }
+
+    .phrase-card {
+        padding: var(--spacing-md);
+    }
+
+    .phrase-card .illustration {
+        font-size: 2.5rem;
+        padding: var(--spacing-sm);
+    }
+
+    .phrase-card .french {
+        font-size: 1.2rem;
+    }
+
+    .phrase-card .pronunciation {
+        font-size: 0.85rem;
+    }
+
+    .phrase-card .english {
+        font-size: 0.95rem;
+    }
+
+    /* Audio button - larger touch target */
+    .phrase-card .audio-btn {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+    }
+
+    /* Alphabet grid */
+    .alphabet-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .letter-card {
+        padding: var(--spacing-sm);
+    }
+
+    .letter-card .letter {
+        font-size: 1.5rem;
+    }
+
+    .letter-card .name {
+        font-size: 0.65rem;
+    }
+
+    /* Grammar/Pattern/Tip boxes */
+    .grammar-box,
+    .pattern-box,
+    .tip-box,
+    .cultural-note {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) 0;
+    }
+
+    .grammar-box h4,
+    .pattern-box h4,
+    .tip-box h4 {
+        font-size: 0.85rem;
+    }
+
+    .tip-box {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+
+    .tip-box i {
+        font-size: 1.2rem;
+    }
+
+    .cultural-note {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        text-align: left;
+    }
+
+    .cultural-note .icon {
+        font-size: 2rem;
+    }
+
+    /* Tables - horizontal scroll on mobile */
+    .conjugation-table,
+    .grammar-box table,
+    .pattern-box table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.85rem;
+    }
+
+    .conjugation-table th,
+    .conjugation-table td {
+        padding: var(--spacing-sm);
+        white-space: nowrap;
+    }
+
+    /* Learning objectives */
+    .learning-objectives {
+        padding: var(--spacing-md);
+    }
+
+    .learning-objectives ul {
+        grid-template-columns: 1fr;
+        gap: var(--spacing-xs);
+    }
+
+    .learning-objectives li {
+        font-size: 0.9rem;
+    }
+
+    /* Exercise section */
+    .exercise-section {
+        padding: var(--spacing-md);
+        margin-top: var(--spacing-lg);
+    }
+
+    .exercise {
+        padding: var(--spacing-md);
+    }
+
+    .exercise-question {
+        font-size: 0.95rem;
+    }
+
+    /* Exercise options - larger touch targets */
+    .exercise-option {
+        padding: var(--spacing-md);
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+
+    .exercise-option .option-letter {
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
+
+    /* Navigation buttons */
+    .section-navigation {
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-lg);
+        padding-top: var(--spacing-md);
+    }
+
+    .nav-btn {
+        width: 100%;
+        justify-content: center;
+        padding: var(--spacing-md);
+        min-height: 48px;
+        font-size: 0.95rem;
+    }
+
+    /* Image vocabulary cards */
+    .image-vocabulary {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--spacing-sm);
+    }
+
+    .vocab-image-card .image-placeholder {
+        height: 100px;
+        font-size: 2.5rem;
+    }
+
+    .vocab-image-card .vocab-info {
+        padding: var(--spacing-sm);
+    }
+
+    .vocab-image-card .vocab-french {
+        font-size: 0.9rem;
+    }
+
+    .vocab-image-card .vocab-english {
+        font-size: 0.8rem;
+    }
+
+    /* Dialogue box */
+    .dialogue-box {
+        padding: var(--spacing-sm);
+    }
+
+    .dialogue-line {
+        padding: var(--spacing-sm);
+        gap: var(--spacing-sm);
+    }
+
+    .dialogue-avatar {
+        width: 32px;
+        height: 32px;
+        font-size: 1rem;
+    }
+
+    .dialogue-content .french-text {
+        font-size: 0.95rem;
+    }
+
+    .dialogue-content .english-text {
+        font-size: 0.8rem;
+    }
+
+    /* Fill in blank */
+    .fill-blank-input {
+        width: 100px;
+        font-size: 0.95rem;
+    }
+
+    /* Quiz modal */
+    .quiz-content {
+        padding: var(--spacing-lg);
+        width: 92%;
+    }
+
+    .quiz-score {
+        font-size: 3rem;
+    }
+
+    .quiz-message {
+        font-size: 1rem;
+    }
+
+    /* Inline styles in sections - TU/VOUS boxes */
+    [style*="grid-template-columns: 1fr 1fr"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Section summary grid */
+    [style*="grid-template-columns: repeat(auto-fit"] {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+/* Extra small phones */
+@media (max-width: 360px) {
+    html {
+        font-size: 14px;
+    }
+
+    .section-header h1 {
+        font-size: 1.3rem;
+    }
+
+    .content-card h2 {
+        font-size: 1.1rem;
+    }
+
+    .alphabet-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+
+    .image-vocabulary {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Landscape mode on iPhone */
+@media (max-width: 932px) and (orientation: landscape) {
+    .content {
+        padding-left: calc(var(--spacing-lg) + var(--safe-area-left));
+        padding-right: calc(var(--spacing-lg) + var(--safe-area-right));
+    }
+
+    .sidebar {
+        width: 50vw;
+        max-width: 280px;
+    }
+
+    .mobile-menu-toggle {
+        left: calc(var(--spacing-md) + var(--safe-area-left));
     }
 }
 

@@ -30,18 +30,18 @@ window.S31 = {
       type: 'tiles',
       title: '恋愛の基本語彙',
       items: [
-        { label: 'un bisou', fr: 'un bisou', en: 'キス（軽い）' },
-        { label: 'un baiser', fr: 'un baiser', en: 'キス（本格的）' },
-        { label: 'un rendez-vous', fr: 'un rendez-vous', en: 'デート・約束' },
-        { label: 'un copain', fr: 'un copain', en: '彼氏・男友達' },
-        { label: 'une copine', fr: 'une copine', en: '彼女・女友達' },
-        { label: 'sortir avec', fr: 'sortir avec', en: '付き合う' },
-        { label: 'tomber amoureux', fr: 'tomber amoureux', en: '恋に落ちる' },
-        { label: 'le coup de foudre', fr: 'le coup de foudre', en: '一目惚れ' },
-        { label: 'un couple', fr: 'un couple', en: 'カップル' },
-        { label: 'célibataire', fr: 'célibataire', en: '独身' },
-        { label: 'draguer', fr: 'draguer', en: 'ナンパする' },
-        { label: 'se marier', fr: 'se marier', en: '結婚する' }
+        { label: 'un bisou', fr: 'un bisou', ja: 'キス（軽い）' },
+        { label: 'un baiser', fr: 'un baiser', ja: 'キス（本格的）' },
+        { label: 'un rendez-vous', fr: 'un rendez-vous', ja: 'デート・約束' },
+        { label: 'un copain', fr: 'un copain', ja: '彼氏・男友達' },
+        { label: 'une copine', fr: 'une copine', ja: '彼女・女友達' },
+        { label: 'sortir avec', fr: 'sortir avec', ja: '付き合う' },
+        { label: 'tomber amoureux', fr: 'tomber amoureux', ja: '恋に落ちる' },
+        { label: 'le coup de foudre', fr: 'le coup de foudre', ja: '一目惚れ' },
+        { label: 'un couple', fr: 'un couple', ja: 'カップル' },
+        { label: 'célibataire', fr: 'célibataire', ja: '独身' },
+        { label: 'draguer', fr: 'draguer', ja: 'ナンパする' },
+        { label: 'se marier', fr: 'se marier', ja: '結婚する' }
       ]
     },
 
@@ -168,16 +168,16 @@ window.S31 = {
       title: '愛称（les petits noms）',
       intro: 'フランス語の愛称は動物や食べ物が多く、日本語の感覚では不思議に響きます。',
       items: [
-        { label: 'mon chéri', fr: 'mon chéri', en: '最も標準的（女性 ma chérie）' },
-        { label: 'mon cœur', fr: 'mon cœur', en: '私の心' },
-        { label: 'mon amour', fr: 'mon amour', en: '私の愛' },
-        { label: 'mon trésor', fr: 'mon trésor', en: '私の宝物' },
-        { label: 'mon chou', fr: 'mon chou', en: '私のキャベツ（！）' },
-        { label: 'mon petit chat', fr: 'mon petit chat', en: '私の子猫' },
-        { label: 'mon lapin', fr: 'mon lapin', en: '私のうさぎ' },
-        { label: 'ma puce', fr: 'ma puce', en: '私のノミ（！）' },
-        { label: 'mon canard', fr: 'mon canard', en: '私のあひる' },
-        { label: 'ma biche', fr: 'ma biche', en: '私の雌鹿' }
+        { label: 'mon chéri', fr: 'mon chéri', ja: '最も標準的（女性 ma chérie）' },
+        { label: 'mon cœur', fr: 'mon cœur', ja: '私の心' },
+        { label: 'mon amour', fr: 'mon amour', ja: '私の愛' },
+        { label: 'mon trésor', fr: 'mon trésor', ja: '私の宝物' },
+        { label: 'mon chou', fr: 'mon chou', ja: '私のキャベツ（！）' },
+        { label: 'mon petit chat', fr: 'mon petit chat', ja: '私の子猫' },
+        { label: 'mon lapin', fr: 'mon lapin', ja: '私のうさぎ' },
+        { label: 'ma puce', fr: 'ma puce', ja: '私のノミ（！）' },
+        { label: 'mon canard', fr: 'mon canard', ja: '私のあひる' },
+        { label: 'ma biche', fr: 'ma biche', ja: '私の雌鹿' }
       ]
     },
 

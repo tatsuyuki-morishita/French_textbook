@@ -615,6 +615,40 @@
 .switch.on { background: var(--accent); }
 .switch.on::after { transform: translateX(18px); }
 
+/* ------------------------------------------------------------
+   Language switch
+   ------------------------------------------------------------ */
+.langswitch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 2px;
+  padding: 2px;
+  border-radius: 99px;
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+}
+.langswitch button {
+  padding: 0.22rem 0.6rem;
+  border-radius: 99px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--text-3);
+  white-space: nowrap;
+  transition: background 0.14s, color 0.14s;
+}
+.langswitch button:hover { color: var(--text); }
+.langswitch button.on {
+  background: var(--accent);
+  color: #fff;
+}
+.langswitch--wide { width: 100%; }
+.langswitch--wide button { flex: 1; padding: 0.35rem 0.6rem; font-size: 0.76rem; }
+
+.nav__lang {
+  padding: var(--s3) var(--s4) 0;
+}
+
 .segmented { display: flex; gap: 2px; background: var(--surface-2); border-radius: var(--radius-sm); padding: 2px; }
 .segmented button {
   padding: 0.3rem 0.7rem;

@@ -94,18 +94,18 @@ window.S12 = {
       title: '位置を表す前置詞',
       intro: 'ほとんどが de を伴い、後ろの名詞で du / de la に変わります。',
       items: [
-        { label: 'près de', fr: 'près de', en: '〜の近くに' },
-        { label: 'loin de', fr: 'loin de', en: '〜から遠い' },
-        { label: 'à côté de', fr: 'à côté de', en: '〜の隣に' },
-        { label: 'en face de', fr: 'en face de', en: '〜の向かいに' },
-        { label: 'devant', fr: 'devant', en: '〜の前に' },
-        { label: 'derrière', fr: 'derrière', en: '〜の後ろに' },
-        { label: 'entre', fr: 'entre', en: '〜の間に' },
-        { label: 'au bout de', fr: 'au bout de', en: '〜の突き当りに' },
-        { label: 'au coin', fr: 'au coin', en: '角に' },
-        { label: 'au feu', fr: 'au feu', en: '信号のところで' },
-        { label: 'sur', fr: 'sur', en: '〜の上に' },
-        { label: 'sous', fr: 'sous', en: '〜の下に' }
+        { label: 'près de', fr: 'près de', ja: '〜の近くに' },
+        { label: 'loin de', fr: 'loin de', ja: '〜から遠い' },
+        { label: 'à côté de', fr: 'à côté de', ja: '〜の隣に' },
+        { label: 'en face de', fr: 'en face de', ja: '〜の向かいに' },
+        { label: 'devant', fr: 'devant', ja: '〜の前に' },
+        { label: 'derrière', fr: 'derrière', ja: '〜の後ろに' },
+        { label: 'entre', fr: 'entre', ja: '〜の間に' },
+        { label: 'au bout de', fr: 'au bout de', ja: '〜の突き当りに' },
+        { label: 'au coin', fr: 'au coin', ja: '角に' },
+        { label: 'au feu', fr: 'au feu', ja: '信号のところで' },
+        { label: 'sur', fr: 'sur', ja: '〜の上に' },
+        { label: 'sous', fr: 'sous', ja: '〜の下に' }
       ]
     },
 

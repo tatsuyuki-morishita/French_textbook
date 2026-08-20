@@ -16,6 +16,7 @@
     version: 1,
     currentSection: 1,
     completed: [],          // section ids
+    lang: 'ja',             // ja | en  — display language, not the French
     theme: 'auto',          // auto | light | dark
     rate: 0.9,              // TTS speed
     showKana: true,

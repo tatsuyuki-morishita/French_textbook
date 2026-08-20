@@ -10,6 +10,62 @@
 
   var ICON = window.Render.ICON;
   var esc  = window.Render.esc;
+  var lang = window.Render.lang;
+
+  /* Shell strings. Content strings live beside the content, in render.js. */
+  var S = {
+    prev:        { ja: '前へ',             en: 'Previous' },
+    markDone:    { ja: '完了にする',        en: 'Mark complete' },
+    done:        { ja: '完了済み',          en: 'Completed' },
+    notReady:    { ja: 'このセクションはまだ用意されていません。', en: 'This section is not available yet.' },
+    searchHint:  { ja: 'フランス語・英語・日本語のどれでも検索できます。',
+                   en: 'Search in French, English, or Japanese.' },
+    noHits:      { ja: '該当なし',          en: 'No matches' },
+    due:         { ja: '今日の復習',        en: 'Due today' },
+    learned:     { ja: '学習済み',          en: 'Learned' },
+    accuracy:    { ja: '正答率',            en: 'Accuracy' },
+    streak:      { ja: '連続日数',          en: 'Day streak' },
+    sessionOver: { ja: 'このセッションは終わりです。お疲れさま！', en: "That's the session done. Nice work!" },
+    noCards:     { ja: 'カードがありません。セクションを開くと単語が追加されます。',
+                   en: 'No cards yet. Open a section to add material.' },
+    again:       { ja: 'もう一度',          en: 'Again' },
+    restart:     { ja: 'もう一度',          en: 'Start again' },
+    gotIt:       { ja: '覚えた',            en: 'Got it' },
+    reveal:      { ja: '答えを見る',        en: 'Show answer' },
+    listen:      { ja: '聞く',              en: 'Listen' },
+    language:    { ja: '表示言語',          en: 'Display language' },
+    languageSub: { ja: '解説と訳の言語。フランス語はそのまま',
+                   en: 'Language of explanations and glosses' },
+    theme:       { ja: 'テーマ',            en: 'Theme' },
+    themeSub:    { ja: '画面の配色',        en: 'Colour scheme' },
+    auto:        { ja: '自動',              en: 'Auto' },
+    light:       { ja: 'ライト',            en: 'Light' },
+    dark:        { ja: 'ダーク',            en: 'Dark' },
+    speed:       { ja: '読み上げ速度',      en: 'Speech rate' },
+    kanaOn:      { ja: 'カタカナ表記',      en: 'Katakana' },
+    kanaSub:     { ja: 'フランス語音を日本語の音で近似', en: 'French sounds approximated in kana' },
+    enReadOn:    { ja: '英語風の読み',      en: 'English-style reading' },
+    enReadSub:   { ja: '英語話者向けのつづり表記', en: 'Spelled as an English speaker would read it' },
+    ipaOn:       { ja: 'IPA（発音記号）',   en: 'IPA' },
+    ipaSub:      { ja: '国際音声記号',      en: 'International Phonetic Alphabet' },
+    engine:      { ja: '音声エンジン',      en: 'Speech voice' },
+    notFound:    { ja: '未検出',            en: 'not detected' },
+    redetect:    { ja: '再検出',            en: 'Re-detect' },
+    wipe:        { ja: '学習データを消去',  en: 'Erase learning data' },
+    wipeSub:     { ja: '進捗・カード・設定をすべて初期化', en: 'Reset progress, cards, and settings' },
+    reset:       { ja: 'リセット',          en: 'Reset' },
+    confirmWipe: { ja: '進捗・カード・設定をすべて消去します。よろしいですか？',
+                   en: 'This erases all progress, cards, and settings. Continue?' },
+    noVoiceApi:  { ja: '<b>このブラウザは音声読み上げに対応していません。</b> Chrome、Safari、Edge の最新版でお試しください。カタカナとIPAは通常どおり使えます。',
+                   en: '<b>This browser does not support speech synthesis.</b> Try a current Chrome, Safari, or Edge. Katakana and IPA still work.' },
+    noFrench:    { ja: '<b>フランス語の音声がこの端末に入っていません。</b> このまま再生すると英語の声でフランス語を読んでしまい、正しい発音になりません。iPhone / iPad なら 設定 → アクセシビリティ → 読み上げコンテンツ → 声 → フランス語 を追加、Windows なら 設定 → 時刻と言語 → 言語 → 言語の追加 → フランス語 で音声パックを入れてください。',
+                   en: '<b>No French voice is installed on this device.</b> Playing anyway reads French with an English voice, which produces the wrong sounds. On iPhone or iPad: Settings &rarr; Accessibility &rarr; Spoken Content &rarr; Voices &rarr; French. On Windows: Settings &rarr; Time &amp; language &rarr; Language &rarr; Add a language &rarr; French.' }
+  };
+
+  function t(key) {
+    var e = S[key];
+    return e ? (e[lang()] || e.ja) : '';
+  }
 
   var current = 1;
   var playingEl = null;
@@ -73,8 +129,7 @@
     var main = $('#main');
 
     if (!data) {
-      main.innerHTML = '<div class="empty">このセクションはまだ用意されていません。<br>' +
-        'Section ' + id + ' is not converted yet.</div>' + navFoot(id);
+      main.innerHTML = '<div class="empty">' + t('notReady') + '</div>' + navFoot(id);
     } else {
       main.innerHTML = window.Render.section(data) + navFoot(id);
     }
@@ -96,9 +151,9 @@
     var next = window.CURRICULUM.sections.find(function (s) { return s.id === id + 1; });
     var done = window.Store.isComplete(id);
     return '<div class="section-foot">' +
-      (prev ? '<button class="btn" data-go="' + prev.id + '">' + ICON.prev + '前へ</button>' : '') +
+      (prev ? '<button class="btn" data-go="' + prev.id + '">' + ICON.prev + t('prev') + '</button>' : '') +
       '<button class="btn' + (done ? '' : ' btn--primary') + '" data-complete="' + id + '">' +
-        ICON.check + (done ? '完了済み' : '完了にする') + '</button>' +
+        ICON.check + (done ? t('done') : t('markDone')) + '</button>' +
       (next ? '<button class="btn btn--grow btn--primary" data-go="' + next.id + '">' +
         esc(next.title) + ICON.next + '</button>' : '') +
       '</div>';
@@ -131,16 +186,10 @@
     if (!el) return;
     if (!st.supported) {
       el.classList.add('show');
-      $('#voiceWarnText').innerHTML =
-        '<b>このブラウザは音声読み上げに対応していません。</b> ' +
-        'Chrome、Safari、Edge の最新版でお試しください。カタカナとIPAは通常どおり使えます。';
+      $('#voiceWarnText').innerHTML = t('noVoiceApi');
     } else if (st.ready && !st.hasFrench) {
       el.classList.add('show');
-      $('#voiceWarnText').innerHTML =
-        '<b>フランス語の音声がこの端末に入っていません。</b> ' +
-        'このまま再生すると英語の声でフランス語を読んでしまい、正しい発音になりません。' +
-        'iPhone / iPad なら 設定 → アクセシビリティ → 読み上げコンテンツ → 声 → フランス語 を追加、' +
-        'Windows なら 設定 → 時刻と言語 → 言語 → 言語の追加 → フランス語 で音声パックを入れてください。';
+      $('#voiceWarnText').innerHTML = t('noFrench');
     } else {
       el.classList.remove('show');
     }
@@ -170,7 +219,7 @@
   function runSearch(q) {
     var box = $('#searchResults');
     q = q.trim().toLowerCase();
-    if (q.length < 1) { box.innerHTML = '<div class="empty">フランス語・英語・日本語のどれでも検索できます。</div>'; return; }
+    if (q.length < 1) { box.innerHTML = '<div class="empty">' + t('searchHint') + '</div>'; return; }
 
     var idx = buildIndex();
     var hits = idx.filter(function (it) {
@@ -179,7 +228,7 @@
              (it.ja && it.ja.indexOf(q) >= 0);
     }).slice(0, 60);
 
-    if (!hits.length) { box.innerHTML = '<div class="empty">該当なし</div>'; return; }
+    if (!hits.length) { box.innerHTML = '<div class="empty">' + t('noHits') + '</div>'; return; }
 
     box.innerHTML = hits.map(function (it) {
       var a = window.Phonetics.analyze(it.fr, it.ipa);
@@ -187,7 +236,8 @@
         '<span style="flex:1;min-width:0">' +
           '<span class="result__fr">' + esc(it.fr) + '</span>' +
           '<span class="result__meta"> · ' + esc(a.kana) + '</span>' +
-          '<div class="result__meta">' + esc(it.en) + '</div>' +
+          '<div class="result__meta">' +
+            esc(lang() === 'en' ? it.en : (it.ja || it.en)) + '</div>' +
         '</span>' +
         '<span class="result__sec">§' + it.section + '</span></button>';
     }).join('');
@@ -215,17 +265,17 @@
     var st = window.Store.cardStats();
 
     var stats = '<div class="statgrid">' +
-      '<div class="stat"><b>' + st.due + '</b><span>今日の復習</span></div>' +
-      '<div class="stat"><b>' + st.known + '</b><span>学習済み</span></div>' +
-      '<div class="stat"><b>' + st.accuracy + '%</b><span>正答率</span></div>' +
-      '<div class="stat"><b>' + st.streak + '</b><span>連続日数</span></div>' +
+      '<div class="stat"><b>' + st.due + '</b><span>' + t('due') + '</span></div>' +
+      '<div class="stat"><b>' + st.known + '</b><span>' + t('learned') + '</span></div>' +
+      '<div class="stat"><b>' + st.accuracy + '%</b><span>' + t('accuracy') + '</span></div>' +
+      '<div class="stat"><b>' + st.streak + '</b><span>' + t('streak') + '</span></div>' +
       '</div>';
 
     if (deckPos >= deck.length) {
       body.innerHTML = stats +
-        '<div class="empty">' + (deck.length ? 'このセッションは終わりです。お疲れさま！' :
-          'カードがありません。セクションを開くと単語が追加されます。') + '</div>' +
-        '<button class="btn btn--primary btn--grow" data-fc="restart" style="width:100%">もう一度</button>';
+        '<div class="empty">' + (deck.length ? t('sessionOver') : t('noCards')) + '</div>' +
+        '<button class="btn btn--primary btn--grow" data-fc="restart" style="width:100%">' +
+        t('restart') + '</button>';
       return;
     }
 
@@ -239,17 +289,17 @@
           '<div class="fc__fr">' + esc(c.fr) + '</div>' +
           (revealed ? '<div class="fc__pron">' + esc(a.kana) + ' · /' + esc(a.ipa) + '/</div>' : '') +
           (revealed ? '<div class="fc__answer">' +
-            '<div class="fc__en">' + esc(c.en) + '</div>' +
-            (c.ja ? '<div class="fc__ja">' + esc(c.ja) + '</div>' : '') +
+            '<div class="fc__en">' + esc(lang() === 'en' ? c.en : (c.ja || c.en)) + '</div>' +
+            (lang() === 'en' || !c.ja ? '' : '<div class="fc__ja">' + esc(c.en) + '</div>') +
           '</div>' : '') +
         '</div>' +
       '</div>' +
       '<div class="fc__actions">' +
-        '<button class="btn" data-fc="say">' + ICON.play + '聞く</button>' +
+        '<button class="btn" data-fc="say">' + ICON.play + t('listen') + '</button>' +
         (revealed
-          ? '<button class="btn btn--grow" data-fc="again">もう一度</button>' +
-            '<button class="btn btn--grow btn--primary" data-fc="good">覚えた</button>'
-          : '<button class="btn btn--grow btn--primary" data-fc="reveal">答えを見る</button>') +
+          ? '<button class="btn btn--grow" data-fc="again">' + t('again') + '</button>' +
+            '<button class="btn btn--grow btn--primary" data-fc="good">' + t('gotIt') + '</button>'
+          : '<button class="btn btn--grow btn--primary" data-fc="reveal">' + t('reveal') + '</button>') +
       '</div>';
   }
 
@@ -279,33 +329,91 @@
         '<button class="switch' + (s.get(key) ? ' on' : '') + '" data-toggle="' + key + '" role="switch" aria-checked="' + !!s.get(key) + '"></button></div>';
     }
 
+    var cur = lang();
+
     $('#settingsBody').innerHTML =
-      '<div class="setting"><div class="setting__label"><b>テーマ</b><span>画面の配色</span></div>' +
+      '<div class="setting"><div class="setting__label"><b>' + t('language') + '</b>' +
+        '<span>' + t('languageSub') + '</span></div>' +
         '<div class="segmented">' +
-          ['auto', 'light', 'dark'].map(function (t) {
-            return '<button data-theme-set="' + t + '"' + (theme === t ? ' class="on"' : '') + '>' +
-              ({ auto: '自動', light: 'ライト', dark: 'ダーク' })[t] + '</button>';
+          '<button data-lang="ja"' + (cur === 'ja' ? ' class="on"' : '') + '>日本語</button>' +
+          '<button data-lang="en"' + (cur === 'en' ? ' class="on"' : '') + '>English</button>' +
+        '</div></div>' +
+
+      '<div class="setting"><div class="setting__label"><b>' + t('theme') + '</b>' +
+        '<span>' + t('themeSub') + '</span></div>' +
+        '<div class="segmented">' +
+          ['auto', 'light', 'dark'].map(function (k) {
+            return '<button data-theme-set="' + k + '"' + (theme === k ? ' class="on"' : '') + '>' +
+              t(k) + '</button>';
           }).join('') +
         '</div></div>' +
 
-      '<div class="setting"><div class="setting__label"><b>読み上げ速度</b><span>' + rate.toFixed(2) + 'x</span></div>' +
+      '<div class="setting"><div class="setting__label"><b>' + t('speed') + '</b>' +
+        '<span>' + rate.toFixed(2) + 'x</span></div>' +
         '<div class="segmented">' +
           [0.6, 0.75, 0.9, 1].map(function (r) {
             return '<button data-rate="' + r + '"' + (Math.abs(rate - r) < 0.01 ? ' class="on"' : '') + '>' + r + 'x</button>';
           }).join('') +
         '</div></div>' +
 
-      toggle('showKana', 'カタカナ表記', 'フランス語音を日本語の音で近似') +
-      toggle('showEnglishReading', '英語風の読み', '英語話者向けのつづり表記') +
-      toggle('showIPA', 'IPA（発音記号）', '国際音声記号') +
+      toggle('showKana', t('kanaOn'), t('kanaSub')) +
+      toggle('showEnglishReading', t('enReadOn'), t('enReadSub')) +
+      toggle('showIPA', t('ipaOn'), t('ipaSub')) +
 
-      '<div class="setting"><div class="setting__label"><b>音声エンジン</b><span>' +
-        (window.Audio2.status().voiceName || '未検出') + '</span></div>' +
-        '<button class="btn btn--sm" data-refresh-voice="1">再検出</button></div>' +
+      '<div class="setting"><div class="setting__label"><b>' + t('engine') + '</b><span>' +
+        (window.Audio2.status().voiceName || t('notFound')) + '</span></div>' +
+        '<button class="btn btn--sm" data-refresh-voice="1">' + t('redetect') + '</button></div>' +
 
-      '<div class="setting"><div class="setting__label"><b>学習データを消去</b>' +
-        '<span>進捗・カード・設定をすべて初期化</span></div>' +
-        '<button class="btn btn--sm" data-reset="1">リセット</button></div>';
+      '<div class="setting"><div class="setting__label"><b>' + t('wipe') + '</b>' +
+        '<span>' + t('wipeSub') + '</span></div>' +
+        '<button class="btn btn--sm" data-reset="1">' + t('reset') + '</button></div>';
+  }
+
+  /* Switching the display language re-renders every surface that
+     holds text: the sidebar, the section, and any open panel. */
+  function setLang(next) {
+    if (next === lang()) return;
+    window.Store.set('lang', next);
+    document.documentElement.setAttribute('lang', next === 'en' ? 'en' : 'ja');
+    searchIndex = null;
+    buildNav();
+    syncLangButtons();
+    applyShellLabels();
+    go(current);
+    if ($('#settingsSheet').classList.contains('is-open')) renderSettings();
+    if ($('#fcSheet').classList.contains('is-open')) renderCard();
+    if ($('#searchSheet').classList.contains('is-open')) runSearch($('#searchInput').value);
+    updateVoiceWarning();
+  }
+
+  function syncLangButtons() {
+    $$('[data-lang]').forEach(function (b) {
+      b.classList.toggle('on', b.dataset.lang === lang());
+    });
+  }
+
+  /* Labels that live in index.html rather than in a render function. */
+  function applyShellLabels() {
+    var en = lang() === 'en';
+    var map = [
+      ['#menuBtn', 'aria-label', en ? 'Open contents' : '目次を開く'],
+      ['#searchSheetTitle', 'text', en ? 'Search' : '検索'],
+      ['#fcSheetTitle', 'text', en ? 'Flashcards' : 'フラッシュカード'],
+      ['#settingsSheetTitle', 'text', en ? 'Settings' : '設定'],
+      ['#navSearchBtn', 'text', en ? 'Search' : '検索'],
+      ['#navCardsBtn', 'text', en ? 'Cards' : 'カード']
+    ];
+    map.forEach(function (m) {
+      var el = $(m[0]);
+      if (!el) return;
+      if (m[1] === 'text') el.textContent = m[2];
+      else el.setAttribute(m[1], m[2]);
+    });
+    var si = $('#searchInput');
+    if (si) si.placeholder = en ? 'bonjour / hello / greeting' : 'bonjour / hello / こんにちは';
+    $$('[data-close-sheet]').forEach(function (b) {
+      if (b.classList.contains('icon-btn')) b.setAttribute('aria-label', en ? 'Close' : '閉じる');
+    });
   }
 
   /* ---------------------------------------------------------
@@ -365,6 +473,9 @@
       return;
     }
 
+    var lg = t.closest('[data-lang]');
+    if (lg) { setLang(lg.dataset.lang); return; }
+
     var th = t.closest('[data-theme-set]');
     if (th) { window.Store.set('theme', th.dataset.themeSet); applyTheme(); renderSettings(); return; }
 
@@ -378,7 +489,7 @@
     }
 
     if (t.closest('[data-reset]')) {
-      if (confirm('進捗・カード・設定をすべて消去します。よろしいですか？')) {
+      if (confirm(t('confirmWipe'))) {
         window.Store.reset();
         applyTheme();
         searchIndex = null;
@@ -414,7 +525,9 @@
 
     var fb = $('.quiz__fb', quiz);
     fb.className = 'quiz__fb show ' + (picked === correct ? 'ok' : 'bad');
-    fb.textContent = (picked === correct ? '正解！ ' : '惜しい。正解は ' + 'ABCD'[correct] + '。 ') +
+    fb.textContent = (picked === correct
+        ? window.Render.ui('correct')
+        : window.Render.ui('wrongPrefix') + 'ABCD'[correct] + window.Render.ui('wrongSuffix')) +
       (quiz.dataset.why || '');
   }
 
@@ -434,7 +547,10 @@
      Boot
      --------------------------------------------------------- */
   applyTheme();
+  document.documentElement.setAttribute('lang', lang() === 'en' ? 'en' : 'ja');
   buildNav();
+  syncLangButtons();
+  applyShellLabels();
   window.Audio2.onStatusChange(updateVoiceWarning);
   setTimeout(updateVoiceWarning, 1500);
 

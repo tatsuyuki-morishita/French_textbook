@@ -35,10 +35,10 @@ window.S7 = {
       title: '定冠詞（the）',
       intro: '特定できるもの、および「〜というもの一般」に付けます。',
       items: [
-        { label: 'le', fr: 'le livre', en: '男性単数' },
-        { label: 'la', fr: 'la table', en: '女性単数' },
-        { label: "l'", fr: "l'ami", en: '母音の前（男女とも）' },
-        { label: 'les', fr: 'les livres', en: '複数（男女とも）' }
+        { label: 'le', fr: 'le livre', ja: '男性単数' },
+        { label: 'la', fr: 'la table', ja: '女性単数' },
+        { label: "l'", fr: "l'ami", ja: '母音の前（男女とも）' },
+        { label: 'les', fr: 'les livres', ja: '複数（男女とも）' }
       ]
     },
 
@@ -78,9 +78,9 @@ window.S7 = {
       title: '不定冠詞（a / an / some）',
       intro: '数えられるものに付けます。「どれでもいい1つ」「いくつか」。',
       items: [
-        { label: 'un', fr: 'un livre', en: '男性単数' },
-        { label: 'une', fr: 'une table', en: '女性単数' },
-        { label: 'des', fr: 'des livres', en: '複数' }
+        { label: 'un', fr: 'un livre', ja: '男性単数' },
+        { label: 'une', fr: 'une table', ja: '女性単数' },
+        { label: 'des', fr: 'des livres', ja: '複数' }
       ]
     },
 

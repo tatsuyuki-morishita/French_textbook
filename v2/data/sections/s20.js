@@ -53,18 +53,18 @@ window.S20 = {
       title: '朝の日課',
       intro: 'ほとんどが代名動詞です。原形のまま再生されます。',
       items: [
-        { label: 'se réveiller', fr: 'se réveiller', en: '目を覚ます' },
-        { label: 'se lever', fr: 'se lever', en: '起きる' },
-        { label: 'se doucher', fr: 'se doucher', en: 'シャワーを浴びる' },
-        { label: 'se laver', fr: 'se laver', en: '体を洗う' },
-        { label: 'se brosser les dents', fr: 'se brosser les dents', en: '歯を磨く' },
-        { label: "s'habiller", fr: "s'habiller", en: '服を着る' },
-        { label: 'se coiffer', fr: 'se coiffer', en: '髪を整える' },
-        { label: 'se raser', fr: 'se raser', en: 'ひげを剃る' },
-        { label: 'se maquiller', fr: 'se maquiller', en: '化粧をする' },
-        { label: 'prendre le petit-déjeuner', fr: 'prendre le petit-déjeuner', en: '朝食をとる' },
-        { label: 'partir au travail', fr: 'partir au travail', en: '仕事に出かける' },
-        { label: 'se dépêcher', fr: 'se dépêcher', en: '急ぐ' }
+        { label: 'se réveiller', fr: 'se réveiller', ja: '目を覚ます' },
+        { label: 'se lever', fr: 'se lever', ja: '起きる' },
+        { label: 'se doucher', fr: 'se doucher', ja: 'シャワーを浴びる' },
+        { label: 'se laver', fr: 'se laver', ja: '体を洗う' },
+        { label: 'se brosser les dents', fr: 'se brosser les dents', ja: '歯を磨く' },
+        { label: "s'habiller", fr: "s'habiller", ja: '服を着る' },
+        { label: 'se coiffer', fr: 'se coiffer', ja: '髪を整える' },
+        { label: 'se raser', fr: 'se raser', ja: 'ひげを剃る' },
+        { label: 'se maquiller', fr: 'se maquiller', ja: '化粧をする' },
+        { label: 'prendre le petit-déjeuner', fr: 'prendre le petit-déjeuner', ja: '朝食をとる' },
+        { label: 'partir au travail', fr: 'partir au travail', ja: '仕事に出かける' },
+        { label: 'se dépêcher', fr: 'se dépêcher', ja: '急ぐ' }
       ]
     },
 

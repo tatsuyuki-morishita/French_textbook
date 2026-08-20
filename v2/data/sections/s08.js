@@ -22,24 +22,24 @@ window.S8 = {
       title: '家族の呼び名',
       intro: '冠詞ごと覚えると性別も同時に頭に入ります。',
       items: [
-        { label: 'la famille', fr: 'la famille', en: '家族' },
-        { label: 'le père', fr: 'le père', en: '父' },
-        { label: 'la mère', fr: 'la mère', en: '母' },
-        { label: 'les parents', fr: 'les parents', en: '両親' },
-        { label: 'le fils', fr: 'le fils', en: '息子' },
-        { label: 'la fille', fr: 'la fille', en: '娘・女の子' },
-        { label: 'les enfants', fr: 'les enfants', en: '子供たち' },
-        { label: 'le frère', fr: 'le frère', en: '兄弟' },
-        { label: 'la sœur', fr: 'la sœur', en: '姉妹' },
-        { label: 'le grand-père', fr: 'le grand-père', en: '祖父' },
-        { label: 'la grand-mère', fr: 'la grand-mère', en: '祖母' },
-        { label: "l'oncle", fr: "l'oncle", en: 'おじ', ipa: 'lɔ̃kl' },
-        { label: 'la tante', fr: 'la tante', en: 'おば' },
-        { label: 'le cousin', fr: 'le cousin', en: 'いとこ（男）→ la cousine' },
-        { label: 'le mari', fr: 'le mari', en: '夫' },
-        { label: 'la femme', fr: 'la femme', en: '妻・女性' },
-        { label: 'le neveu', fr: 'le neveu', en: '甥' },
-        { label: 'la nièce', fr: 'la nièce', en: '姪', ipa: 'la njɛs' }
+        { label: 'la famille', fr: 'la famille', ja: '家族' },
+        { label: 'le père', fr: 'le père', ja: '父' },
+        { label: 'la mère', fr: 'la mère', ja: '母' },
+        { label: 'les parents', fr: 'les parents', ja: '両親' },
+        { label: 'le fils', fr: 'le fils', ja: '息子' },
+        { label: 'la fille', fr: 'la fille', ja: '娘・女の子' },
+        { label: 'les enfants', fr: 'les enfants', ja: '子供たち' },
+        { label: 'le frère', fr: 'le frère', ja: '兄弟' },
+        { label: 'la sœur', fr: 'la sœur', ja: '姉妹' },
+        { label: 'le grand-père', fr: 'le grand-père', ja: '祖父' },
+        { label: 'la grand-mère', fr: 'la grand-mère', ja: '祖母' },
+        { label: "l'oncle", fr: "l'oncle", ja: 'おじ', ipa: 'lɔ̃kl' },
+        { label: 'la tante', fr: 'la tante', ja: 'おば' },
+        { label: 'le cousin', fr: 'le cousin', ja: 'いとこ（男）→ la cousine' },
+        { label: 'le mari', fr: 'le mari', ja: '夫' },
+        { label: 'la femme', fr: 'la femme', ja: '妻・女性' },
+        { label: 'le neveu', fr: 'le neveu', ja: '甥' },
+        { label: 'la nièce', fr: 'la nièce', ja: '姪', ipa: 'la njɛs' }
       ]
     },
 
@@ -160,12 +160,12 @@ window.S8 = {
       type: 'tiles',
       title: '住んでいる場所',
       items: [
-        { label: 'une maison', fr: "J'habite dans une maison", en: '一軒家' },
-        { label: 'un appartement', fr: "J'habite dans un appartement", en: 'アパート' },
-        { label: 'en ville', fr: "J'habite en ville", en: '街中' },
-        { label: 'à la campagne', fr: "J'habite à la campagne", en: '田舎' },
-        { label: 'en banlieue', fr: "J'habite en banlieue", en: '郊外' },
-        { label: 'au bord de la mer', fr: "J'habite au bord de la mer", en: '海のそば' }
+        { label: 'une maison', fr: "J'habite dans une maison", ja: '一軒家' },
+        { label: 'un appartement', fr: "J'habite dans un appartement", ja: 'アパート' },
+        { label: 'en ville', fr: "J'habite en ville", ja: '街中' },
+        { label: 'à la campagne', fr: "J'habite à la campagne", ja: '田舎' },
+        { label: 'en banlieue', fr: "J'habite en banlieue", ja: '郊外' },
+        { label: 'au bord de la mer', fr: "J'habite au bord de la mer", ja: '海のそば' }
       ]
     },
 

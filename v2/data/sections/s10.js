@@ -23,9 +23,9 @@ window.S10 = {
       intro: '100 の位は「数字 + cent」を並べるだけ。et は使いません。',
       items: [
         { label: '100', fr: 'cent' },
-        { label: '101', fr: 'cent un', en: 'et は入らない' },
-        { label: '200', fr: 'deux cents', en: 'ちょうどなら s が付く' },
-        { label: '250', fr: 'deux cent cinquante', en: '続きがあると s が消える' },
+        { label: '101', fr: 'cent un', ja: 'et は入らない' },
+        { label: '200', fr: 'deux cents', ja: 'ちょうどなら s が付く' },
+        { label: '250', fr: 'deux cent cinquante', ja: '続きがあると s が消える' },
         { label: '300', fr: 'trois cents' },
         { label: '500', fr: 'cinq cents' },
         { label: '999', fr: 'neuf cent quatre-vingt-dix-neuf' },
@@ -77,14 +77,14 @@ window.S10 = {
       title: '序数（〜番目）',
       intro: '基本は「数詞 + ième」。1 番目だけが完全に別の語です。',
       items: [
-        { label: '1er', fr: 'premier', en: '1番目（男性）→ première' },
-        { label: '2e', fr: 'deuxième', en: '2番目' },
-        { label: '3e', fr: 'troisième', en: '3番目' },
-        { label: '4e', fr: 'quatrième', en: '4番目' },
-        { label: '5e', fr: 'cinquième', en: '5番目・u が入る' },
-        { label: '9e', fr: 'neuvième', en: '9番目・f が v に' },
-        { label: '10e', fr: 'dixième', en: '10番目' },
-        { label: '20e', fr: 'vingtième', en: '20番目' }
+        { label: '1er', fr: 'premier', ja: '1番目（男性）→ première' },
+        { label: '2e', fr: 'deuxième', ja: '2番目' },
+        { label: '3e', fr: 'troisième', ja: '3番目' },
+        { label: '4e', fr: 'quatrième', ja: '4番目' },
+        { label: '5e', fr: 'cinquième', ja: '5番目・u が入る' },
+        { label: '9e', fr: 'neuvième', ja: '9番目・f が v に' },
+        { label: '10e', fr: 'dixième', ja: '10番目' },
+        { label: '20e', fr: 'vingtième', ja: '20番目' }
       ]
     },
 

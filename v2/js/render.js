@@ -22,6 +22,53 @@
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>'
   };
 
+  /* ---------------------------------------------------------
+     Display language
+     ---------------------------------------------------------
+     Content carries Japanese in its base field and English in a
+     `_en` sibling. T() picks one; if a translation is missing it
+     falls back to Japanese rather than rendering an empty card.
+     --------------------------------------------------------- */
+  function lang() { return window.Store.get('lang') || 'ja'; }
+
+  function T(obj, key) {
+    if (!obj) return '';
+    if (lang() === 'en') {
+      var alt = obj[key + '_en'];
+      if (alt !== undefined && alt !== null && alt !== '') return alt;
+    }
+    var base = obj[key];
+    return base === undefined || base === null ? '' : base;
+  }
+
+  /* Interface strings. */
+  var UI = {
+    when:        { ja: 'どんな場面で使う？', en: 'When do you use it?' },
+    sound:       { ja: '発音の注意',         en: 'Sound notes' },
+    playAll:     { ja: '全部聞く',           en: 'Play all' },
+    goals:       { ja: 'このセクションで学ぶこと', en: "What you'll learn here" },
+    literal:     { ja: '直訳',               en: 'Literally' },
+    point:       { ja: 'ポイント',           en: 'Key point' },
+    kana:        { ja: 'カナ',               en: 'KANA' },
+    listen:      { ja: '発音を聞く',         en: 'Listen' },
+    listenSlow:  { ja: 'ゆっくり聞く',       en: 'Listen slowly' },
+    section:     { ja: 'セクション',         en: 'Section' },
+    correct:     { ja: '正解！ ',            en: 'Correct! ' },
+    wrongPrefix: { ja: '惜しい。正解は ',    en: 'Not quite. The answer is ' },
+    wrongSuffix: { ja: '。 ',                en: '. ' }
+  };
+
+  /* For fields that exist as a `ja` / `en` pair rather than base + _en. */
+  function pick(obj) {
+    if (!obj) return '';
+    return lang() === 'en' ? (obj.en || obj.ja || '') : (obj.ja || obj.en || '');
+  }
+
+  function ui(key) {
+    var e = UI[key];
+    return e ? (e[lang()] || e.ja) : '';
+  }
+
   function esc(s) {
     return String(s == null ? '' : s)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -43,7 +90,7 @@
   function pronRow(a) {
     var bits = [];
     if (window.Store.get('showKana') && a.kana) {
-      bits.push('<span><b>カナ</b><span class="pron__kana">' + esc(a.kana) + '</span></span>');
+      bits.push('<span><b>' + ui('kana') + '</b><span class="pron__kana">' + esc(a.kana) + '</span></span>');
     }
     if (window.Store.get('showEnglishReading') && a.en) {
       bits.push('<span><b>EN</b><span class="pron__en">' + esc(a.en) + '</span></span>');
@@ -78,11 +125,12 @@
       if (!p) return '';
       return '<div class="warn__item">' +
         '<span class="warn__sym">' + esc(sym) + '</span>' +
-        '<span>' + esc(p.ja) + '<span class="near">' + esc(p.tip) + '</span></span></div>';
+        '<span>' + esc(T(p, 'desc')) +
+        '<span class="near">' + esc(T(p, 'tip')) + '</span></span></div>';
     }).join('');
 
     var tag = syms.map(function (x) { return '<i>' + esc(x) + '</i>'; }).join('');
-    return disclosure(uid + 'p', ICON.sound, '発音の注意', tag, body, 'disc--gold');
+    return disclosure(uid + 'p', ICON.sound, ui('sound'), tag, body, 'disc--gold');
   }
 
   function registerRow(item) {
@@ -91,7 +139,7 @@
     var dots = '';
     for (var i = 0; i < 3; i++) dots += '<i class="' + (i < r.dots ? 'on' : '') + '"></i>';
     return '<div class="reg"><span class="reg__dots">' + dots + '</span>' +
-      esc(r.ja) + ' / ' + esc(r.en) + '</div>';
+      esc(lang() === 'en' ? r.en : r.ja) + '</div>';
   }
 
   /* One collapsed row. `tag` renders inline next to the label so the
@@ -106,11 +154,11 @@
   }
 
   function whenBlock(item, uid) {
-    if (!item.when && !item.ja_when) return '';
-    var body = '';
-    if (item.ja_when) body += '<p>' + esc(item.ja_when) + '</p>';
-    if (item.when) body += '<p class="en">' + esc(item.when) + '</p>';
-    return disclosure(uid, ICON.theatre, 'どんな場面で使う？', '', body, 'disc--warm');
+    var text = lang() === 'en' ? (item.when || item.ja_when)
+                               : (item.ja_when || item.when);
+    if (!text) return '';
+    return disclosure(uid, ICON.theatre, ui('when'), '',
+      '<p>' + esc(text) + '</p>', 'disc--warm');
   }
 
   /* ---------------------------------------------------------
@@ -128,18 +176,18 @@
       '<div class="card__top">' +
         '<div class="card__fr">' + wordSpans(view) + '</div>' +
         '<div class="card__audio">' +
-          '<button class="pbtn" data-play="' + attr(item.fr) + '" aria-label="発音を聞く">' + ICON.play + '</button>' +
-          '<button class="pbtn pbtn--slow" data-play="' + attr(item.fr) + '" data-slow="1" aria-label="ゆっくり聞く">0.5x</button>' +
+          '<button class="pbtn" data-play="' + attr(item.fr) + '" aria-label="' + ui('listen') + '">' + ICON.play + '</button>' +
+          '<button class="pbtn pbtn--slow" data-play="' + attr(item.fr) + '" data-slow="1" aria-label="' + ui('listenSlow') + '">0.5x</button>' +
         '</div>' +
       '</div>' +
       pronRow(view) +
-      '<div class="card__en">' + esc(item.en) + '</div>' +
-      (item.ja ? '<div class="card__ja">' + esc(item.ja) + '</div>' : '') +
-      (item.literal ? '<div class="card__lit">直訳: ' + esc(item.literal) + '</div>' : '') +
+      '<div class="card__en">' + esc(pick(item)) + '</div>' +
+      (T(item, 'literal') ? '<div class="card__lit">' + ui('literal') + ': ' +
+        esc(T(item, 'literal')) + '</div>' : '') +
       registerRow(item) +
       '<div class="card__more">' +
         whenBlock(item, uid) +
-        warnings(view, uid, item.tip) +
+        warnings(view, uid, T(item, 'tip')) +
       '</div>' +
       '</div>';
   }
@@ -148,15 +196,17 @@
      Blocks
      --------------------------------------------------------- */
   function blockHead(b, sayAll) {
-    if (!b.title && !b.intro) return '';
+    var title = T(b, 'title');
+    var intro = T(b, 'intro');
+    if (!title && !intro) return '';
     var h = '<div class="block__head">';
-    if (b.title) h += '<h2>' + esc(b.title) + '</h2>';
+    if (title) h += '<h2>' + esc(title) + '</h2>';
     if (sayAll) {
       h += '<button class="playall" data-playall="' + attr(sayAll.join('|')) + '">' +
-        ICON.stack + '全部聞く</button>';
+        ICON.stack + ui('playAll') + '</button>';
     }
     h += '</div>';
-    if (b.intro) h += '<p class="block__intro">' + esc(b.intro) + '</p>';
+    if (intro) h += '<p class="block__intro">' + esc(intro) + '</p>';
     return h;
   }
 
@@ -175,7 +225,7 @@
         return '<button class="tile" data-play="' + attr(i.say || i.fr) + '">' +
           '<div class="tile__fr">' + esc(i.label || i.fr) + '</div>' +
           '<div class="tile__kana">' + esc(i.kana || a.kana) + '</div>' +
-          (i.en ? '<div class="tile__en">' + esc(i.en) + '</div>' : '') +
+          (pick(i) ? '<div class="tile__en">' + esc(pick(i)) + '</div>' : '') +
           '</button>';
       }).join('');
       return '<section class="block">' + blockHead(b, all) +
@@ -191,13 +241,14 @@
           '<div class="conj__pro">' + esc(f.pronoun) + '</div>' +
           '<div class="conj__form">' + esc(f.form) +
             '<span class="conj__kana">' + esc(f.kana || a.kana) + '</span></div>' +
-          '<button class="pbtn" data-play="' + attr(full) + '" aria-label="発音を聞く">' + ICON.play + '</button>' +
+          '<button class="pbtn" data-play="' + attr(full) + '" aria-label="' + ui('listen') + '">' + ICON.play + '</button>' +
           '</div>';
       }).join('');
       var all = b.forms.map(function (f) { return f.pronoun.split('/')[0].trim() + ' ' + f.form; });
       return '<section class="block">' + blockHead(b, all) +
         '<div class="conj">' + rows + '</div>' +
-        (b.note ? '<div class="note"><h4>ポイント</h4><p>' + esc(b.note) + '</p></div>' : '') +
+        (T(b, 'note') ? '<div class="note"><h4>' + ui('point') + '</h4><p>' +
+          esc(T(b, 'note')) + '</p></div>' : '') +
         '</section>';
     },
 
@@ -209,36 +260,38 @@
           '<div class="dlg__body">' +
             '<div class="dlg__fr">' + wordSpans(a) + '</div>' +
             '<div class="dlg__kana">' + esc(a.kana) + '</div>' +
-            '<div class="dlg__en">' + esc(l.en) + (l.ja ? ' ／ ' + esc(l.ja) : '') + '</div>' +
+            '<div class="dlg__en">' + esc(pick(l)) + '</div>' +
           '</div>' +
-          '<button class="pbtn" data-play="' + attr(l.fr) + '" aria-label="発音を聞く">' + ICON.play + '</button>' +
+          '<button class="pbtn" data-play="' + attr(l.fr) + '" aria-label="' + ui('listen') + '">' + ICON.play + '</button>' +
           '</div>';
       }).join('');
       var all = b.lines.map(function (l) { return l.fr; });
       return '<section class="block">' + blockHead(b, all) +
         '<div class="dlg">' +
-          (b.scene ? '<div class="dlg__scene">' + esc(b.scene) + '</div>' : '') +
+          (T(b, 'scene') ? '<div class="dlg__scene">' + esc(T(b, 'scene')) + '</div>' : '') +
           lines + '</div></section>';
     },
 
     note: function (b) {
       var cls = b.tone === 'warm' ? ' note--warm' : b.tone === 'gold' ? ' note--gold' : '';
-      var body = b.body ? '<p>' + esc(b.body) + '</p>' : '';
-      if (b.list) {
-        body += '<ul>' + b.list.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+      var body = T(b, 'body') ? '<p>' + esc(T(b, 'body')) + '</p>' : '';
+      var list = T(b, 'list');
+      if (list && list.length) {
+        body += '<ul>' + list.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
       }
       return '<section class="block"><div class="note' + cls + '">' +
-        (b.title ? '<h4>' + esc(b.title) + '</h4>' : '') + body + '</div></section>';
+        (T(b, 'title') ? '<h4>' + esc(T(b, 'title')) + '</h4>' : '') + body + '</div></section>';
     },
 
     quiz: function (b) {
       var qs = b.questions.map(function (q, qi) {
-        var opts = q.options.map(function (o, oi) {
+        var options = T(q, 'options') || [];
+        var opts = options.map(function (o, oi) {
           return '<button class="opt" data-opt="' + oi + '">' +
             '<span class="opt__k">' + 'ABCD'[oi] + '</span><span>' + esc(o) + '</span></button>';
         }).join('');
-        return '<div class="quiz" data-answer="' + q.answer + '" data-why="' + attr(q.why || '') + '">' +
-          '<div class="quiz__q"><span class="num">' + (qi + 1) + '.</span>' + esc(q.q) + '</div>' +
+        return '<div class="quiz" data-answer="' + q.answer + '" data-why="' + attr(T(q, 'why')) + '">' +
+          '<div class="quiz__q"><span class="num">' + (qi + 1) + '.</span>' + esc(T(q, 'q')) + '</div>' +
           '<div class="quiz__opts">' + opts + '</div>' +
           '<div class="quiz__fb"></div></div>';
       }).join('');
@@ -254,16 +307,17 @@
     var html = '<header class="shead">' +
       '<div class="shead__meta">' +
         '<span class="chip chip--' + esc(lvl) + '">' + esc(data.level) + '</span>' +
-        '<span class="chip">Section ' + data.id + '</span>' +
+        '<span class="chip">' + ui('section') + ' ' + data.id + '</span>' +
         (data.duration ? '<span class="chip">' + esc(data.duration) + '</span>' : '') +
       '</div>' +
-      '<h1>' + esc(data.title.en) + '</h1>' +
+      '<h1>' + esc(lang() === 'en' ? data.title.en : (data.title.ja || data.title.en)) + '</h1>' +
       '<p class="shead__fr">' + esc(data.title.fr) + '</p>' +
       '</header>';
 
-    if (data.goals && data.goals.length) {
-      html += '<div class="goals"><h3>このセクションで学ぶこと</h3><ul>' +
-        data.goals.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') +
+    var goals = T(data, 'goals');
+    if (goals && goals.length) {
+      html += '<div class="goals"><h3>' + ui('goals') + '</h3><ul>' +
+        goals.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') +
         '</ul></div>';
     }
 
@@ -297,6 +351,10 @@
     disclosure: disclosure,
     phraseCard: phraseCard,
     collectItems: collectItems,
+    T: T,
+    ui: ui,
+    pick: pick,
+    lang: lang,
     ICON: ICON,
     esc: esc,
     attr: attr

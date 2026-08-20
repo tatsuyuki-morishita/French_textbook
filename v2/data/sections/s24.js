@@ -21,22 +21,22 @@ window.S24 = {
       type: 'tiles',
       title: '食べ物',
       items: [
-        { label: 'le pain', fr: 'le pain', en: 'パン' },
-        { label: 'le fromage', fr: 'le fromage', en: 'チーズ' },
-        { label: 'la viande', fr: 'la viande', en: '肉' },
-        { label: 'le poulet', fr: 'le poulet', en: '鶏肉' },
-        { label: 'le poisson', fr: 'le poisson', en: '魚' },
-        { label: 'la salade', fr: 'la salade', en: 'サラダ' },
-        { label: 'les fruits', fr: 'les fruits', en: '果物' },
-        { label: 'les légumes', fr: 'les légumes', en: '野菜' },
-        { label: 'les œufs', fr: 'les œufs', en: '卵' },
-        { label: 'le riz', fr: 'le riz', en: '米' },
-        { label: 'les pâtes', fr: 'les pâtes', en: 'パスタ' },
-        { label: 'la soupe', fr: 'la soupe', en: 'スープ' },
-        { label: 'le dessert', fr: 'le dessert', en: 'デザート' },
-        { label: 'le gâteau', fr: 'le gâteau', en: 'ケーキ' },
-        { label: 'le beurre', fr: 'le beurre', en: 'バター' },
-        { label: 'le sucre', fr: 'le sucre', en: '砂糖' }
+        { label: 'le pain', fr: 'le pain', ja: 'パン' },
+        { label: 'le fromage', fr: 'le fromage', ja: 'チーズ' },
+        { label: 'la viande', fr: 'la viande', ja: '肉' },
+        { label: 'le poulet', fr: 'le poulet', ja: '鶏肉' },
+        { label: 'le poisson', fr: 'le poisson', ja: '魚' },
+        { label: 'la salade', fr: 'la salade', ja: 'サラダ' },
+        { label: 'les fruits', fr: 'les fruits', ja: '果物' },
+        { label: 'les légumes', fr: 'les légumes', ja: '野菜' },
+        { label: 'les œufs', fr: 'les œufs', ja: '卵' },
+        { label: 'le riz', fr: 'le riz', ja: '米' },
+        { label: 'les pâtes', fr: 'les pâtes', ja: 'パスタ' },
+        { label: 'la soupe', fr: 'la soupe', ja: 'スープ' },
+        { label: 'le dessert', fr: 'le dessert', ja: 'デザート' },
+        { label: 'le gâteau', fr: 'le gâteau', ja: 'ケーキ' },
+        { label: 'le beurre', fr: 'le beurre', ja: 'バター' },
+        { label: 'le sucre', fr: 'le sucre', ja: '砂糖' }
       ]
     },
 
@@ -44,14 +44,14 @@ window.S24 = {
       type: 'tiles',
       title: '飲み物',
       items: [
-        { label: "l'eau", fr: "l'eau", en: '水' },
-        { label: 'le café', fr: 'le café', en: 'コーヒー' },
-        { label: 'le thé', fr: 'le thé', en: '紅茶' },
-        { label: 'le vin', fr: 'le vin', en: 'ワイン' },
-        { label: 'la bière', fr: 'la bière', en: 'ビール' },
-        { label: "le jus d'orange", fr: "le jus d'orange", en: 'オレンジジュース' },
-        { label: 'le lait', fr: 'le lait', en: '牛乳' },
-        { label: 'une carafe d\'eau', fr: "une carafe d'eau", en: '水差し（無料）' }
+        { label: "l'eau", fr: "l'eau", ja: '水' },
+        { label: 'le café', fr: 'le café', ja: 'コーヒー' },
+        { label: 'le thé', fr: 'le thé', ja: '紅茶' },
+        { label: 'le vin', fr: 'le vin', ja: 'ワイン' },
+        { label: 'la bière', fr: 'la bière', ja: 'ビール' },
+        { label: "le jus d'orange", fr: "le jus d'orange", ja: 'オレンジジュース' },
+        { label: 'le lait', fr: 'le lait', ja: '牛乳' },
+        { label: 'une carafe d\'eau', fr: "une carafe d'eau", ja: '水差し（無料）' }
       ]
     },
 

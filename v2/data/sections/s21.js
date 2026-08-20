@@ -21,18 +21,18 @@ window.S21 = {
       type: 'tiles',
       title: '夜の日課',
       items: [
-        { label: 'rentrer à la maison', fr: 'rentrer à la maison', en: '帰宅する' },
-        { label: 'dîner', fr: 'dîner', en: '夕食をとる' },
-        { label: 'faire la vaisselle', fr: 'faire la vaisselle', en: '皿を洗う' },
-        { label: 'regarder la télé', fr: 'regarder la télé', en: 'テレビを見る' },
-        { label: 'lire un livre', fr: 'lire un livre', en: '本を読む' },
-        { label: 'prendre un bain', fr: 'prendre un bain', en: '風呂に入る' },
-        { label: 'se détendre', fr: 'se détendre', en: 'くつろぐ' },
-        { label: 'se coucher', fr: 'se coucher', en: '寝る' },
-        { label: "s'endormir", fr: "s'endormir", en: '眠りにつく' },
-        { label: 'dormir', fr: 'dormir', en: '眠る' },
-        { label: 'ranger', fr: 'ranger', en: '片付ける' },
-        { label: 'appeler des amis', fr: 'appeler des amis', en: '友達に電話する' }
+        { label: 'rentrer à la maison', fr: 'rentrer à la maison', ja: '帰宅する' },
+        { label: 'dîner', fr: 'dîner', ja: '夕食をとる' },
+        { label: 'faire la vaisselle', fr: 'faire la vaisselle', ja: '皿を洗う' },
+        { label: 'regarder la télé', fr: 'regarder la télé', ja: 'テレビを見る' },
+        { label: 'lire un livre', fr: 'lire un livre', ja: '本を読む' },
+        { label: 'prendre un bain', fr: 'prendre un bain', ja: '風呂に入る' },
+        { label: 'se détendre', fr: 'se détendre', ja: 'くつろぐ' },
+        { label: 'se coucher', fr: 'se coucher', ja: '寝る' },
+        { label: "s'endormir", fr: "s'endormir", ja: '眠りにつく' },
+        { label: 'dormir', fr: 'dormir', ja: '眠る' },
+        { label: 'ranger', fr: 'ranger', ja: '片付ける' },
+        { label: 'appeler des amis', fr: 'appeler des amis', ja: '友達に電話する' }
       ]
     },
 

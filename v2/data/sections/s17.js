@@ -115,18 +115,18 @@ window.S17 = {
       type: 'tiles',
       title: '時間の表現',
       items: [
-        { label: 'ce soir', fr: 'ce soir', en: '今夜' },
-        { label: 'demain soir', fr: 'demain soir', en: '明日の夜' },
-        { label: 'ce week-end', fr: 'ce week-end', en: '今週末' },
-        { label: 'la semaine prochaine', fr: 'la semaine prochaine', en: '来週' },
-        { label: 'après-demain', fr: 'après-demain', en: '明後日' },
-        { label: 'dans une heure', fr: 'dans une heure', en: '1時間後に' },
-        { label: 'tout de suite', fr: 'tout de suite', en: 'すぐに', ipa: 'tu də sɥit' },
-        { label: 'plus tard', fr: 'plus tard', en: '後で' },
-        { label: 'midi', fr: 'midi', en: '正午' },
-        { label: 'minuit', fr: 'minuit', en: '真夜中' },
-        { label: "l'après-midi", fr: "l'après-midi", en: '午後' },
-        { label: 'en retard', fr: 'en retard', en: '遅れて' }
+        { label: 'ce soir', fr: 'ce soir', ja: '今夜' },
+        { label: 'demain soir', fr: 'demain soir', ja: '明日の夜' },
+        { label: 'ce week-end', fr: 'ce week-end', ja: '今週末' },
+        { label: 'la semaine prochaine', fr: 'la semaine prochaine', ja: '来週' },
+        { label: 'après-demain', fr: 'après-demain', ja: '明後日' },
+        { label: 'dans une heure', fr: 'dans une heure', ja: '1時間後に' },
+        { label: 'tout de suite', fr: 'tout de suite', ja: 'すぐに', ipa: 'tu də sɥit' },
+        { label: 'plus tard', fr: 'plus tard', ja: '後で' },
+        { label: 'midi', fr: 'midi', ja: '正午' },
+        { label: 'minuit', fr: 'minuit', ja: '真夜中' },
+        { label: "l'après-midi", fr: "l'après-midi", ja: '午後' },
+        { label: 'en retard', fr: 'en retard', ja: '遅れて' }
       ]
     },
 
@@ -134,18 +134,18 @@ window.S17 = {
       type: 'tiles',
       title: '外出先とイベント',
       items: [
-        { label: 'un film', fr: 'un film', en: '映画' },
-        { label: 'une pièce de théâtre', fr: 'une pièce de théâtre', en: '演劇' },
-        { label: 'un concert', fr: 'un concert', en: 'コンサート' },
-        { label: 'une exposition', fr: 'une exposition', en: '展覧会', ipa: 'yn ɛkspozisjɔ̃' },
-        { label: 'un spectacle', fr: 'un spectacle', en: 'ショー' },
-        { label: 'un bar', fr: 'un bar', en: 'バー' },
-        { label: 'une boîte', fr: 'une boîte', en: 'クラブ' },
-        { label: 'un musée', fr: 'un musée', en: '美術館' },
-        { label: 'un match', fr: 'un match', en: '試合' },
-        { label: 'une terrasse', fr: 'une terrasse', en: 'テラス席' },
-        { label: 'un pique-nique', fr: 'un pique-nique', en: 'ピクニック' },
-        { label: 'une balade', fr: 'une balade', en: '散歩' }
+        { label: 'un film', fr: 'un film', ja: '映画' },
+        { label: 'une pièce de théâtre', fr: 'une pièce de théâtre', ja: '演劇' },
+        { label: 'un concert', fr: 'un concert', ja: 'コンサート' },
+        { label: 'une exposition', fr: 'une exposition', ja: '展覧会', ipa: 'yn ɛkspozisjɔ̃' },
+        { label: 'un spectacle', fr: 'un spectacle', ja: 'ショー' },
+        { label: 'un bar', fr: 'un bar', ja: 'バー' },
+        { label: 'une boîte', fr: 'une boîte', ja: 'クラブ' },
+        { label: 'un musée', fr: 'un musée', ja: '美術館' },
+        { label: 'un match', fr: 'un match', ja: '試合' },
+        { label: 'une terrasse', fr: 'une terrasse', ja: 'テラス席' },
+        { label: 'un pique-nique', fr: 'un pique-nique', ja: 'ピクニック' },
+        { label: 'une balade', fr: 'une balade', ja: '散歩' }
       ]
     },
 

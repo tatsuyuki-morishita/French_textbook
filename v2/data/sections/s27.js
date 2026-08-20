@@ -157,16 +157,16 @@ window.S27 = {
       type: 'tiles',
       title: '未来を表す時間の語',
       items: [
-        { label: 'demain', fr: 'demain', en: '明日' },
-        { label: 'après-demain', fr: 'après-demain', en: '明後日' },
-        { label: 'la semaine prochaine', fr: 'la semaine prochaine', en: '来週' },
-        { label: 'le mois prochain', fr: 'le mois prochain', en: '来月' },
-        { label: "l'année prochaine", fr: "l'année prochaine", en: '来年' },
-        { label: 'bientôt', fr: 'bientôt', en: 'まもなく' },
-        { label: 'un jour', fr: 'un jour', en: 'いつか' },
-        { label: 'dans deux ans', fr: 'dans deux ans', en: '2年後に' },
-        { label: 'plus tard', fr: 'plus tard', en: '後で' },
-        { label: 'à l\'avenir', fr: "à l'avenir", en: '今後は' }
+        { label: 'demain', fr: 'demain', ja: '明日' },
+        { label: 'après-demain', fr: 'après-demain', ja: '明後日' },
+        { label: 'la semaine prochaine', fr: 'la semaine prochaine', ja: '来週' },
+        { label: 'le mois prochain', fr: 'le mois prochain', ja: '来月' },
+        { label: "l'année prochaine", fr: "l'année prochaine", ja: '来年' },
+        { label: 'bientôt', fr: 'bientôt', ja: 'まもなく' },
+        { label: 'un jour', fr: 'un jour', ja: 'いつか' },
+        { label: 'dans deux ans', fr: 'dans deux ans', ja: '2年後に' },
+        { label: 'plus tard', fr: 'plus tard', ja: '後で' },
+        { label: 'à l\'avenir', fr: "à l'avenir", ja: '今後は' }
       ]
     },
 

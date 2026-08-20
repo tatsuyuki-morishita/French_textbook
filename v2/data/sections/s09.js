@@ -106,13 +106,13 @@ window.S9 = {
       title: '曜日（les jours）',
       intro: '★曜日は小文字で書きます★ 英語のように大文字にはしません。',
       items: [
-        { label: 'lundi', fr: 'lundi', en: '月曜' },
-        { label: 'mardi', fr: 'mardi', en: '火曜' },
-        { label: 'mercredi', fr: 'mercredi', en: '水曜' },
-        { label: 'jeudi', fr: 'jeudi', en: '木曜' },
-        { label: 'vendredi', fr: 'vendredi', en: '金曜' },
-        { label: 'samedi', fr: 'samedi', en: '土曜' },
-        { label: 'dimanche', fr: 'dimanche', en: '日曜' }
+        { label: 'lundi', fr: 'lundi', ja: '月曜' },
+        { label: 'mardi', fr: 'mardi', ja: '火曜' },
+        { label: 'mercredi', fr: 'mercredi', ja: '水曜' },
+        { label: 'jeudi', fr: 'jeudi', ja: '木曜' },
+        { label: 'vendredi', fr: 'vendredi', ja: '金曜' },
+        { label: 'samedi', fr: 'samedi', ja: '土曜' },
+        { label: 'dimanche', fr: 'dimanche', ja: '日曜' }
       ]
     },
 
@@ -133,18 +133,18 @@ window.S9 = {
       title: '月（les mois）',
       intro: '月も小文字。日付は「日 + 月」の順で言います。',
       items: [
-        { label: 'janvier', fr: 'janvier', en: '1月' },
-        { label: 'février', fr: 'février', en: '2月' },
-        { label: 'mars', fr: 'mars', en: '3月' },
-        { label: 'avril', fr: 'avril', en: '4月' },
-        { label: 'mai', fr: 'mai', en: '5月' },
-        { label: 'juin', fr: 'juin', en: '6月' },
-        { label: 'juillet', fr: 'juillet', en: '7月' },
-        { label: 'août', fr: 'août', en: '8月' },
-        { label: 'septembre', fr: 'septembre', en: '9月' },
-        { label: 'octobre', fr: 'octobre', en: '10月' },
-        { label: 'novembre', fr: 'novembre', en: '11月' },
-        { label: 'décembre', fr: 'décembre', en: '12月' }
+        { label: 'janvier', fr: 'janvier', ja: '1月' },
+        { label: 'février', fr: 'février', ja: '2月' },
+        { label: 'mars', fr: 'mars', ja: '3月' },
+        { label: 'avril', fr: 'avril', ja: '4月' },
+        { label: 'mai', fr: 'mai', ja: '5月' },
+        { label: 'juin', fr: 'juin', ja: '6月' },
+        { label: 'juillet', fr: 'juillet', ja: '7月' },
+        { label: 'août', fr: 'août', ja: '8月' },
+        { label: 'septembre', fr: 'septembre', ja: '9月' },
+        { label: 'octobre', fr: 'octobre', ja: '10月' },
+        { label: 'novembre', fr: 'novembre', ja: '11月' },
+        { label: 'décembre', fr: 'décembre', ja: '12月' }
       ]
     },
 

@@ -174,7 +174,11 @@
         }
         case 'î': case 'ï': out += 'i'; matched = true; break;
         case 'ô': out += 'o'; matched = true; break;
-        case 'o': out += last ? 'o' : 'ɔ'; matched = true; break;
+        case 'o': {
+          var atEnd = last || (silentFrom >= 0 && i + 1 >= silentFrom);
+          out += atEnd ? 'o' : 'ɔ';
+          matched = true; break;
+        }
         case 'u': case 'ù': case 'û': case 'ü': out += 'y'; matched = true; break;
         case 'y':
           out += (isV(w[i - 1]) && isV(w[i + 1])) ? 'j' : 'i';
@@ -274,10 +278,20 @@
      --------------------------------------------------------- */
   var LIAISON_SOUND = { s: 'z', x: 'z', z: 'z', t: 't', d: 't', n: 'n', p: 'p', r: 'ʁ' };
 
+  function joinLiaison(ipa, li) {
+    if (!li) return ipa;
+    var last = ipa.slice(-1);
+    if (li === 'z' && (last === 's' || last === 'z')) return ipa.slice(0, -1) + 'z';
+    if (last === li) return ipa;
+    return ipa + li;
+  }
+
   function liaisonFor(prevRaw, nextRaw) {
     var prev = prevRaw.toLowerCase().replace(/[^a-zàâéèêëîïôùûüçœ'-]/g, '');
     var next = nextRaw.toLowerCase().replace(/[^a-zàâéèêëîïôùûüçœ'-]/g, '');
     if (!prev || !next) return '';
+    var apos = prev.lastIndexOf("'");
+    if (apos >= 0) prev = prev.slice(apos + 1);
     if (!LIAISON_TRIGGERS.has(prev)) return '';
     if (H_ASPIRE.has(next)) return '';
     if (!/^[aàâeéèêiîoôuùyh]/.test(next)) return '';
@@ -482,7 +496,7 @@
       if (i < wordList.length - 1) {
         li = liaisonFor(bare, wordList[i + 1].replace(/[.,!?;:«»“”"()]/g, ''));
       }
-      var full = ipa + li;
+      var full = joinLiaison(ipa, li);
 
       words.push({
         text: raw,

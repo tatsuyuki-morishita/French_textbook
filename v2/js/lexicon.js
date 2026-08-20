@@ -52,7 +52,7 @@ window.LEXICON = {
   'chez': 'ʃe',
   'nez': 'ne',
   'riz': 'ʁi',
-  'gars': 'ɡa',
+  'gars': 'ga',
 
   /* -ill- pronounced /il/ rather than /ij/ */
   'ville': 'vil', 'villes': 'vil', 'village': 'vilaʒ',
@@ -82,7 +82,7 @@ window.LEXICON = {
 
   /* ---------- verb 3rd-person plural: -ent is SILENT ---------- */
   'parlent': 'paʁl', 'aiment': 'ɛm', 'habitent': 'abit', 'travaillent': 'tʁavaj',
-  'écoutent': 'ekut', 'regardent': 'ʁəɡaʁd', 'mangent': 'mɑ̃ʒ', 'jouent': 'ʒu',
+  'écoutent': 'ekut', 'regardent': 'ʁəgaʁd', 'mangent': 'mɑ̃ʒ', 'jouent': 'ʒu',
   'étudient': 'etydi', 'arrivent': 'aʁiv', 'restent': 'ʁɛst', 'entrent': 'ɑ̃tʁ',
   'cherchent': 'ʃɛʁʃ', 'trouvent': 'tʁuv', 'donnent': 'dɔn', 'portent': 'pɔʁt',
   's\'appellent': 'sapɛl', 'appellent': 'apɛl',
@@ -109,6 +109,8 @@ window.LEXICON = {
   'qui': 'ki', 'que': 'kə', 'quoi': 'kwa', 'quand': 'kɑ̃',
   'quel': 'kɛl', 'quelle': 'kɛl', 'quels': 'kɛl', 'quelles': 'kɛl',
   'pourquoi': 'puʁkwa', 'parce': 'paʁs',
+  "qu'est-ce": 'kɛs', 'est-ce': 'ɛs', "qu'est": 'kɛ',
+  'comprends': 'kɔ̃pʁɑ̃', 'comprend': 'kɔ̃pʁɑ̃', 'comprenez': 'kɔ̃pʁəne',
   'oui': 'wi', 'non': 'nɔ̃', 'si': 'si',
   'pas': 'pa', 'ne': 'nə', 'plus': 'ply', 'très': 'tʁɛ',
   'beaucoup': 'boku', 'trop': 'tʁo', 'peu': 'pø', 'aussi': 'osi',
@@ -142,7 +144,7 @@ window.LEXICON = {
 
   /* ---------- nationalities and places ---------- */
   'français': 'fʁɑ̃sɛ', 'française': 'fʁɑ̃sɛz', 'france': 'fʁɑ̃s',
-  'anglais': 'ɑ̃ɡlɛ', 'anglaise': 'ɑ̃ɡlɛz',
+  'anglais': 'ɑ̃glɛ', 'anglaise': 'ɑ̃glɛz',
   'japonais': 'ʒapɔnɛ', 'japonaise': 'ʒapɔnɛz', 'japon': 'ʒapɔ̃',
   'américain': 'ameʁikɛ̃', 'américaine': 'ameʁikɛn',
   'allemand': 'almɑ̃', 'allemande': 'almɑ̃d',
@@ -161,15 +163,15 @@ window.LEXICON = {
   'semaine': 'səmɛn', 'mois': 'mwa', 'année': 'ane', 'an': 'ɑ̃',
   'heure': 'œʁ', 'heures': 'œʁ', 'minute': 'minyt',
   'nom': 'nɔ̃', 'prénom': 'pʁenɔ̃', 'âge': 'ɑʒ',
-  'grand': 'ɡʁɑ̃', 'grande': 'ɡʁɑ̃d', 'petit': 'pəti', 'petite': 'pətit',
+  'grand': 'gʁɑ̃', 'grande': 'gʁɑ̃d', 'petit': 'pəti', 'petite': 'pətit',
   'bon': 'bɔ̃', 'bonne': 'bɔn', 'mauvais': 'movɛ', 'mauvaise': 'movɛz',
   'beau': 'bo', 'belle': 'bɛl', 'nouveau': 'nuvo', 'nouvelle': 'nuvɛl',
   'jeune': 'ʒœn', 'vieux': 'vjø', 'vieille': 'vjɛj',
   'blanc': 'blɑ̃', 'blanche': 'blɑ̃ʃ', 'noir': 'nwaʁ', 'vert': 'vɛʁ',
   'rouge': 'ʁuʒ', 'bleu': 'blø', 'jaune': 'ʒon',
   'restaurant': 'ʁɛstoʁɑ̃', 'cinéma': 'sinema', 'théâtre': 'teɑtʁ',
-  'gare': 'ɡaʁ', 'aéroport': 'aeʁɔpɔʁ', 'hôtel': 'otɛl', 'hôpital': 'ɔpital',
-  'magasin': 'maɡazɛ̃', 'marché': 'maʁʃe', 'banque': 'bɑ̃k',
+  'gare': 'gaʁ', 'aéroport': 'aeʁɔpɔʁ', 'hôtel': 'otɛl', 'hôpital': 'ɔpital',
+  'magasin': 'magazɛ̃', 'marché': 'maʁʃe', 'banque': 'bɑ̃k',
   'voiture': 'vwatyʁ', 'train': 'tʁɛ̃', 'bus': 'bys', 'métro': 'metʁo',
   'famille': 'famij', 'père': 'pɛʁ', 'mère': 'mɛʁ', 'frère': 'fʁɛʁ',
   'sœur': 'sœʁ', 'soeur': 'sœʁ', 'parents': 'paʁɑ̃',

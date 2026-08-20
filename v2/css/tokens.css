@@ -1,0 +1,148 @@
+/* ============================================================
+   tokens.css — design tokens
+   ------------------------------------------------------------
+   Light is the base palette. Dark is redefined twice: once under
+   prefers-color-scheme for viewers on "system", and once under
+   [data-theme="dark"] so the in-app toggle wins either way.
+   No colour is ever defined only inside a media query.
+   ============================================================ */
+
+:root {
+  /* --- surfaces --- */
+  --bg:            #FAF9F7;
+  --bg-sunk:       #F1EFEB;
+  --surface:       #FFFFFF;
+  --surface-2:     #F7F5F2;
+  --surface-hover: #F0EDE8;
+
+  /* --- text --- */
+  --text:          #1A1A20;
+  --text-2:        #4A4A55;
+  --text-3:        #75757F;
+  --text-inverse:  #FFFFFF;
+
+  /* --- lines --- */
+  --line:          #E4E0D9;
+  --line-strong:   #CFC9BF;
+
+  /* --- accents --- */
+  --accent:        #2D5BA8;   /* French blue, desaturated for long reading */
+  --accent-soft:   #E8EFF9;
+  --accent-text:   #23477F;
+
+  --warm:          #C0563C;   /* terracotta, for "when to use" */
+  --warm-soft:     #FBEDE8;
+
+  --gold:          #A57B22;   /* pronunciation warnings */
+  --gold-soft:     #FBF2DD;
+
+  --ok:            #2F7D53;
+  --ok-soft:       #E4F2E9;
+  --bad:           #C33C3C;
+  --bad-soft:      #FBE9E9;
+
+  /* --- level badges --- */
+  --a0:            #4A8C6F;
+  --a1:            #2D5BA8;
+  --a2:            #7A4B99;
+
+  /* --- type --- */
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans",
+          "Hiragino Kaku Gothic ProN", "Yu Gothic UI", Meiryo, system-ui, sans-serif;
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+           "Times New Roman", serif;
+  --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+
+  /* --- spacing --- */
+  --s1: 0.25rem;  --s2: 0.5rem;   --s3: 0.75rem;  --s4: 1rem;
+  --s5: 1.5rem;   --s6: 2rem;     --s7: 3rem;     --s8: 4rem;
+
+  --radius:    12px;
+  --radius-sm: 8px;
+  --radius-lg: 18px;
+
+  --shadow:    0 1px 2px rgba(26, 26, 32, 0.05), 0 4px 14px rgba(26, 26, 32, 0.05);
+  --shadow-lg: 0 8px 40px rgba(26, 26, 32, 0.14);
+
+  --nav-w: 300px;
+  --header-h: 56px;
+  --measure: 46rem;
+}
+
+/* Dark for viewers whose OS says dark and who have made no in-app choice. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:            #121218;
+    --bg-sunk:       #0C0C11;
+    --surface:       #1B1B23;
+    --surface-2:     #22222C;
+    --surface-hover: #2A2A35;
+
+    --text:          #ECEAE6;
+    --text-2:        #B4B1AB;
+    --text-3:        #85827C;
+
+    --line:          #2E2E3A;
+    --line-strong:   #414150;
+
+    --accent:        #7BA3E0;
+    --accent-soft:   #1D2939;
+    --accent-text:   #A9C4EE;
+
+    --warm:          #E08769;
+    --warm-soft:     #33211B;
+
+    --gold:          #D9B25C;
+    --gold-soft:     #2E2617;
+
+    --ok:            #6BBE8E;
+    --ok-soft:       #16291F;
+    --bad:           #E88080;
+    --bad-soft:      #2E1A1A;
+
+    --a0:            #6BBE8E;
+    --a1:            #7BA3E0;
+    --a2:            #B48ED4;
+
+    --shadow:    0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+  }
+}
+
+/* Dark chosen explicitly in the app. */
+:root[data-theme="dark"] {
+  --bg:            #121218;
+  --bg-sunk:       #0C0C11;
+  --surface:       #1B1B23;
+  --surface-2:     #22222C;
+  --surface-hover: #2A2A35;
+
+  --text:          #ECEAE6;
+  --text-2:        #B4B1AB;
+  --text-3:        #85827C;
+
+  --line:          #2E2E3A;
+  --line-strong:   #414150;
+
+  --accent:        #7BA3E0;
+  --accent-soft:   #1D2939;
+  --accent-text:   #A9C4EE;
+
+  --warm:          #E08769;
+  --warm-soft:     #33211B;
+
+  --gold:          #D9B25C;
+  --gold-soft:     #2E2617;
+
+  --ok:            #6BBE8E;
+  --ok-soft:       #16291F;
+  --bad:           #E88080;
+  --bad-soft:      #2E1A1A;
+
+  --a0:            #6BBE8E;
+  --a1:            #7BA3E0;
+  --a2:            #B48ED4;
+
+  --shadow:    0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 14px rgba(0, 0, 0, 0.3);
+  --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
+}

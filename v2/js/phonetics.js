@@ -65,16 +65,34 @@
     return /^[rflmnv](re|le)?e?s?$/.test(rest) ? 'œ' : 'ø';
   }
 
+  /* French drops a whole word-final consonant cluster, not just its last
+     letter: comprend-s, petit-s, ver-t. Returns the index where that silent
+     run begins, or -1. n and m are excluded because the nasal-vowel rules
+     have already claimed them. */
+  function silentTailStart(w) {
+    if (window.PRONOUNCED_FINAL.has(w)) return -1;
+    var end = w.length - 1;
+    var i = end;
+    while (i >= 0 && 'bdgpstxz'.indexOf(w[i]) >= 0) i--;
+    return i === end ? -1 : i + 1;
+  }
+
   function coreToIPA(w) {
     var out = '';
     var i = 0;
     var n = w.length;
+    var silentFrom = silentTailStart(w);
 
     while (i < n) {
       var rest = w.slice(i);
       var c = w[i];
       var last = (i === n - 1);
+      var mute = (silentFrom >= 0 && i >= silentFrom);
       var matched = false;
+
+      /* Inside the silent tail nothing is voiced. Checked here so it also
+         covers g and c, which have their own cases further down. */
+      if (mute && 'bdgpstxz'.indexOf(c) >= 0) { i++; continue; }
 
       /* ---- word-final endings (checked first, they override) ---- */
       if (rest === 'ent' && i > 0) { out += 'ɑ̃'; break; }
@@ -173,26 +191,20 @@
           out += /^[eiyéèê]/.test(w.slice(i + 1)) ? 'ʒ' : 'g';
           matched = true; break;
         case 's':
-          if (isV(w[i - 1]) && isV(w[i + 1])) out += 'z';
-          else if (!last || window.PRONOUNCED_FINAL.has(w)) out += 's';
+          out += (isV(w[i - 1]) && isV(w[i + 1])) ? 'z' : 's';
           matched = true; break;
-        case 'x':
-          if (last) { if (window.PRONOUNCED_FINAL.has(w)) out += 's'; }
-          else out += 'ks';
-          matched = true; break;
+        case 'x': out += 'ks'; matched = true; break;
         case 'h': matched = true; break;                    // always silent
         case 'j': out += 'ʒ'; matched = true; break;
         case 'r': out += 'ʁ'; matched = true; break;
         case 'w': out += 'w'; matched = true; break;
         case 'ñ': out += 'ɲ'; matched = true; break;
 
-        /* consonants that fall silent at the end of a word */
+        /* consonants that fall silent in a word-final cluster */
         case 'b': case 'd': case 'n': case 'm':
-        case 'p': case 't': case 'z': {
-          var silentFinal = last && !window.PRONOUNCED_FINAL.has(w);
-          if (!silentFinal) out += (c === 'z' ? 'z' : c);
+        case 'p': case 't': case 'z':
+          out += c;
           matched = true; break;
-        }
 
         /* CaReFuL — these stay audible at the end of a word */
         case 'f': case 'l': case 'k': case 'v': out += c; matched = true; break;
@@ -264,6 +276,7 @@
      IPA tokenising (nasal vowels are two code units)
      --------------------------------------------------------- */
   function ipaSymbols(ipa) {
+    ipa = String(ipa).replace(/ɡ/g, 'g');   // script g -> ascii g
     var out = [];
     for (var i = 0; i < ipa.length; i++) {
       var s = ipa[i];
@@ -350,6 +363,10 @@
       var s = syl[i];
       var next = syl[i + 1];
 
+      /* syllable-initial /ɥ/ (huit) is a full ユ, not the small ュ that
+         follows a consonant */
+      if (s === 'ɥ') { out += 'ユ'; i++; continue; }
+
       if (ROW[s] && next && (VOWEL_IDX[next] !== undefined || NASAL_BASE[next] !== undefined || next === 'y')) {
         if (next === 'y') out += Y_COL[s] || (ROW[s][2] + 'ュ');
         else if (NASAL_BASE[next] !== undefined) out += ROW[s][NASAL_BASE[next]] + 'ン';
@@ -357,7 +374,9 @@
         i += 2;
         continue;
       }
-      if (ROW[s] && (next === 'j' || next === 'ɥ')) { out += ROW[s][1]; i++; continue; }
+      if (ROW[s] && next === 'ɥ') { out += (Y_COL[s] || ROW[s][2] + 'ュ'); i += 2; continue; }
+      if (ROW[s] && next === 'j') { out += ROW[s][1]; i++; continue; }
+      if (s === 'ɥ') { out += 'ユ'; i++; continue; }
       if (ROW[s]) { out += ROW[s][2]; i++; continue; }   // bare consonant
       if (BARE_VOWEL[s]) { out += BARE_VOWEL[s]; i++; continue; }
       i++;
@@ -376,8 +395,16 @@
       var li = parts.length - 1;
       var lastSyl = syls[li];
       var lastSym = lastSyl[lastSyl.length - 1];
-      var closed = !VOWELS_IPA.has(lastSym) && !GLIDES.has(lastSym);
-      if (closed && ROW[lastSym]) {
+      /* Lengthen only a simple V+C ending. Two closing consonants
+         (re-GARDE) leave no room for an audible long vowel. */
+      var coda = 0;
+      for (var ci = lastSyl.length - 1; ci >= 0; ci--) {
+        if (VOWELS_IPA.has(lastSyl[ci]) || GLIDES.has(lastSyl[ci])) break;
+        coda++;
+      }
+      var closed = coda === 1;
+      var nasal = lastSyl.some(function (x) { return /̃/.test(x); });
+      if (closed && !nasal && ROW[lastSym]) {
         var tail = ROW[lastSym][2];
         var t = parts[li];
         if (t.length > tail.length && t.slice(-tail.length) === tail && !/ー/.test(t)) {
@@ -426,13 +453,17 @@
     var ipaParts = [];
     for (var i = 0; i < wordList.length; i++) {
       var raw = wordList[i];
-      var bare = raw.replace(/[.,!?;:«»""()]/g, '');
-      if (!bare) continue;
+      var bare = raw.replace(/[.,!?;:«»“”"()]/g, '');
+      if (!bare) {
+        /* French sets a space before ? ! : ; — keep the mark on the page. */
+        words.push({ text: raw, bare: '', ipa: '', kana: '', en: '', punct: true });
+        continue;
+      }
 
       var ipa = wordToIPA(bare);
       var li = '';
       if (i < wordList.length - 1) {
-        li = liaisonFor(bare, wordList[i + 1].replace(/[.,!?;:«»""()]/g, ''));
+        li = liaisonFor(bare, wordList[i + 1].replace(/[.,!?;:«»“”"()]/g, ''));
       }
       var full = ipa + li;
 
@@ -457,8 +488,10 @@
     var result = {
       text: text,
       ipa: phraseIPA,
-      kana: overrideIPA ? ipaToKana(overrideIPA) : words.map(function (w) { return w.kana; }).join('・'),
-      en: overrideIPA ? ipaToEnglish(overrideIPA) : words.map(function (w) { return w.en; }).join(' '),
+      kana: overrideIPA ? ipaToKana(overrideIPA)
+        : words.filter(function (w) { return !w.punct; }).map(function (w) { return w.kana; }).join('・'),
+      en: overrideIPA ? ipaToEnglish(overrideIPA)
+        : words.filter(function (w) { return !w.punct; }).map(function (w) { return w.en; }).join(' '),
       words: words,
       hard: hard,
       hasLiaison: words.some(function (w) { return w.liaison; })

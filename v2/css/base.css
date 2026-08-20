@@ -1,0 +1,264 @@
+/* ============================================================
+   base.css — reset, layout shell, navigation
+   Mobile-first: the base rules describe the phone, media queries
+   add the sidebar layout from 900px up.
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4 { line-height: 1.25; margin: 0; font-weight: 650; letter-spacing: -0.015em; }
+h1 { font-size: 1.75rem; }
+h2 { font-size: 1.3rem; }
+h3 { font-size: 1.05rem; }
+p  { margin: 0 0 var(--s4); }
+a  { color: var(--accent); }
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection { background: var(--accent-soft); color: var(--accent-text); }
+
+/* ------------------------------------------------------------
+   Header (mobile only)
+   ------------------------------------------------------------ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  height: var(--header-h);
+  padding: 0 var(--s4);
+  padding-top: env(safe-area-inset-top);
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.icon-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  transition: background 0.15s, color 0.15s;
+}
+.icon-btn:hover { background: var(--surface-hover); color: var(--text); }
+.icon-btn svg { width: 20px; height: 20px; }
+
+/* ------------------------------------------------------------
+   Sidebar
+   ------------------------------------------------------------ */
+.nav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 60;
+  width: min(88vw, var(--nav-w));
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border-right: 1px solid var(--line);
+  transform: translateX(-100%);
+  transition: transform 0.26s cubic-bezier(0.4, 0, 0.2, 1);
+  padding-top: env(safe-area-inset-top);
+}
+.nav.is-open { transform: translateX(0); }
+
+.nav__head {
+  padding: var(--s4) var(--s4) var(--s3);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav__brand {
+  display: flex;
+  align-items: baseline;
+  gap: var(--s2);
+  font-family: var(--serif);
+  font-size: 1.3rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+.nav__brand span { font-size: 0.72rem; font-family: var(--sans); color: var(--text-3); letter-spacing: 0.06em; }
+
+.nav__progress {
+  margin-top: var(--s3);
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 99px;
+  background: var(--bg-sunk);
+  overflow: hidden;
+}
+.bar > i {
+  display: block;
+  height: 100%;
+  border-radius: 99px;
+  background: var(--accent);
+  transition: width 0.4s ease;
+}
+
+.nav__list {
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: var(--s3) var(--s2) var(--s6);
+  -webkit-overflow-scrolling: touch;
+}
+
+.nav__group { margin-bottom: var(--s4); }
+.nav__group > h4 {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-3);
+  padding: var(--s2) var(--s3);
+  font-weight: 600;
+}
+
+.nav__item {
+  display: flex;
+  align-items: center;
+  gap: var(--s3);
+  width: 100%;
+  text-align: left;
+  padding: 0.6rem var(--s3);
+  border-radius: var(--radius-sm);
+  color: var(--text-2);
+  font-size: 0.85rem;
+  line-height: 1.35;
+  transition: background 0.14s, color 0.14s;
+}
+.nav__item:hover { background: var(--surface-hover); color: var(--text); }
+.nav__item.is-active { background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
+
+.nav__num {
+  flex: 0 0 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  background: var(--bg-sunk);
+  font-size: 0.7rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-3);
+  font-weight: 600;
+}
+.nav__item.is-active .nav__num { background: var(--accent); color: #fff; }
+.nav__item.is-done .nav__num { background: var(--ok-soft); color: var(--ok); }
+.nav__item.is-done .nav__num::after { content: "✓"; }
+.nav__item.is-done .nav__num > span { display: none; }
+
+.nav__label { flex: 1; min-width: 0; }
+
+.nav__foot {
+  border-top: 1px solid var(--line);
+  padding: var(--s3) var(--s4) calc(var(--s3) + env(safe-area-inset-bottom));
+  display: flex;
+  gap: var(--s2);
+}
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  background: rgba(12, 12, 17, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.26s;
+}
+.backdrop.is-open { opacity: 1; pointer-events: auto; }
+
+/* ------------------------------------------------------------
+   Main
+   ------------------------------------------------------------ */
+.main {
+  padding: var(--s5) var(--s4) var(--s8);
+  max-width: var(--measure);
+  margin: 0 auto;
+}
+
+.section-foot {
+  display: flex;
+  gap: var(--s3);
+  margin-top: var(--s7);
+  padding-top: var(--s5);
+  border-top: 1px solid var(--line);
+}
+
+/* ------------------------------------------------------------
+   Desktop
+   ------------------------------------------------------------ */
+@media (min-width: 900px) {
+  .header { display: none; }
+
+  .nav {
+    transform: none;
+    box-shadow: none;
+  }
+
+  .backdrop { display: none; }
+
+  .app { margin-left: var(--nav-w); }
+
+  .main { padding: var(--s7) var(--s6) var(--s8); }
+
+  h1 { font-size: 2.1rem; }
+  h2 { font-size: 1.45rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

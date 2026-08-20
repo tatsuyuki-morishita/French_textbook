@@ -184,7 +184,8 @@
 
     conjugation: function (b) {
       var rows = b.forms.map(function (f) {
-        var full = f.pronoun + ' ' + f.form;
+        /* "il / elle" is two pronouns; speak and transcribe only the first. */
+        var full = f.pronoun.split('/')[0].trim() + ' ' + f.form;
         var a = window.Phonetics.analyze(full, f.ipa);
         return '<div class="conj__row">' +
           '<div class="conj__pro">' + esc(f.pronoun) + '</div>' +
@@ -193,7 +194,7 @@
           '<button class="pbtn" data-play="' + attr(full) + '" aria-label="発音を聞く">' + ICON.play + '</button>' +
           '</div>';
       }).join('');
-      var all = b.forms.map(function (f) { return f.pronoun + ' ' + f.form; });
+      var all = b.forms.map(function (f) { return f.pronoun.split('/')[0].trim() + ' ' + f.form; });
       return '<section class="block">' + blockHead(b, all) +
         '<div class="conj">' + rows + '</div>' +
         (b.note ? '<div class="note"><h4>ポイント</h4><p>' + esc(b.note) + '</p></div>' : '') +

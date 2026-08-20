@@ -142,7 +142,7 @@ window.S1 = {
         { pronoun: 'il / elle',   form: "s'appelle" },
         { pronoun: 'nous',        form: 'nous appelons' },
         { pronoun: 'vous',        form: 'vous appelez' },
-        { pronoun: 'ils / elles', form: 'sappellent', kana: 'サペール', ipa: 'sapɛl' }
+        { pronoun: 'ils / elles', form: "s'appellent", ipa: 'sapɛl' }
       ],
       note: 'm\'appelle / t\'appelles / s\'appelle / s\'appellent はすべて音が「アペル」で同じ。書き分けは目で、聞き分けは主語（je, tu, il...）でします。nous appelons と vous appelez だけ音が変わります。'
     },

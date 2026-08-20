@@ -88,6 +88,9 @@
       var c = w[i];
       var last = (i === n - 1);
       var mute = (silentFrom >= 0 && i >= silentFrom);
+      /* A doubled consonant is one sound. Step over both copies rather than
+         rewriting w, which would invalidate silentFrom. */
+      var dbl = isC(c) && w[i + 1] === c;
       var matched = false;
 
       /* Inside the silent tail nothing is voiced. Checked here so it also
@@ -154,14 +157,6 @@
       if (/^gu/.test(rest) && /^[eiéèy]/.test(rest.slice(2))) { out += 'g'; i += 2; continue; }
       if (/^sc/.test(rest) && /^[eiy]/.test(rest.slice(2))) { out += 's'; i += 2; continue; }
 
-      /* ---- doubled consonants collapse ---- */
-      if (isC(c) && w[i + 1] === c) {
-        if (c === 's') { out += 's'; i += 2; continue; }
-        w = w.slice(0, i + 1) + w.slice(i + 2);
-        n = w.length;
-        continue;
-      }
-
       /* ---- single letters ---- */
       switch (c) {
         case 'a': case 'à': case 'â': case 'ä': out += 'a'; matched = true; break;
@@ -214,7 +209,7 @@
           matched = true;
       }
 
-      if (!matched) i++; else i++;
+      i += dbl ? 2 : 1;
     }
 
     return out;
@@ -454,7 +449,7 @@
     for (var i = 0; i < wordList.length; i++) {
       var raw = wordList[i];
       var bare = raw.replace(/[.,!?;:«»“”"()]/g, '');
-      if (!bare) {
+      if (!bare || !/[a-zàâäéèêëîïôöùûüçœæ]/i.test(bare)) {
         /* French sets a space before ? ! : ; — keep the mark on the page. */
         words.push({ text: raw, bare: '', ipa: '', kana: '', en: '', punct: true });
         continue;

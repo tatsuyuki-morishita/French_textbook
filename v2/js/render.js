@@ -67,6 +67,12 @@
   };
 
   /* For fields that exist as a `ja` / `en` pair rather than base + _en. */
+  /* Conjugation rows are labelled by pronoun. The possessive table adds
+     a Japanese particle to them, which has no place in English mode. */
+  function pronounLabel(p) {
+    return lang() === 'en' ? String(p).replace(/\s*の\s*$/, '') : p;
+  }
+
   function pick(obj) {
     if (!obj) return '';
     return lang() === 'en' ? (obj.en || obj.ja || '') : (obj.ja || obj.en || '');
@@ -85,6 +91,17 @@
 
   /* Attribute-safe: single quotes are common in French (j'ai, l'ami). */
   function attr(s) { return esc(s).replace(/'/g, '&#39;'); }
+
+  /* Dialogue speakers are drawn as one- or two-character badges.
+     The Japanese labels need a Latin stand-in in English mode. */
+  var SPEAKER_EN = {
+    '客': 'C',   /* customer  */
+    '店': 'S',   /* shop staff */
+    '薬': 'Ph',  /* pharmacist */
+    '審': 'O',   /* border officer */
+    '友': 'F',   /* friend */
+    '人': 'L'    /* local, passer-by */
+  };
 
   var REGISTER = {
     formal:  { dots: 3, ja: 'フォーマル', en: 'formal' },
@@ -274,7 +291,7 @@
         var full = f.pronoun.split('/')[0].trim() + ' ' + f.form;
         var a = window.Phonetics.analyze(full, f.ipa);
         return '<div class="conj__row">' +
-          '<div class="conj__pro">' + esc(f.pronoun) + '</div>' +
+          '<div class="conj__pro">' + esc(pronounLabel(f.pronoun)) + '</div>' +
           '<div class="conj__form">' + esc(f.form) +
             '<span class="conj__kana">' + esc(f.kana || a.kana) + '</span></div>' +
           '<button class="pbtn" data-play="' + attr(full) + '" aria-label="' + ui('listen') + '">' + ICON.play + '</button>' +
@@ -292,7 +309,8 @@
       var lines = b.lines.map(function (l) {
         var a = window.Phonetics.analyze(l.fr, l.ipa);
         return '<div class="dlg__line">' +
-          '<div class="dlg__who">' + esc(l.who) + '</div>' +
+          '<div class="dlg__who">' +
+            esc(lang() === 'en' ? (SPEAKER_EN[l.who] || l.who) : l.who) + '</div>' +
           '<div class="dlg__body">' +
             '<div class="dlg__fr">' + wordSpans(a) + '</div>' +
             '<div class="dlg__kana">' + esc(a.kana) + '</div>' +
@@ -348,7 +366,7 @@
         var full = f.pronoun.split('/')[0].trim() + ' ' + f.form;
         var a = window.Phonetics.analyze(full, f.ipa);
         return '<div class="conj__row">' +
-          '<div class="conj__pro">' + esc(f.pronoun) + '</div>' +
+          '<div class="conj__pro">' + esc(pronounLabel(f.pronoun)) + '</div>' +
           '<div class="conj__form">' + esc(f.form) +
             '<span class="conj__kana">' + esc(f.kana || a.kana) + '</span></div>' +
           '<button class="pbtn" data-play="' + attr(full) + '" aria-label="' + ui('listen') + '">' +
@@ -401,7 +419,9 @@
       '<div class="shead__meta">' +
         '<span class="chip chip--' + esc(lvl) + '">' + esc(data.level) + '</span>' +
         '<span class="chip">' + ui('section') + ' ' + data.id + '</span>' +
-        (data.duration ? '<span class="chip">' + esc(data.duration) + '</span>' : '') +
+        (data.duration ? '<span class="chip">' +
+          esc(lang() === 'en' ? data.duration.replace('分', ' min') : data.duration) +
+          '</span>' : '') +
       '</div>' +
       '<h1>' + esc(lang() === 'en' ? data.title.en : (data.title.ja || data.title.en)) + '</h1>' +
       '<p class="shead__fr">' + esc(data.title.fr) + '</p>' +

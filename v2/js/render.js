@@ -15,6 +15,8 @@
     stack: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 2 7l10 5 10-5-10-5z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/></svg>',
     theatre: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h9v7a4.5 4.5 0 0 1-9 0V4z"/><path d="M7 7.5h.01M10 7.5h.01"/><path d="M11 4h9v7a4.5 4.5 0 0 1-9 0"/><path d="M14 7.5h.01M17 7.5h.01"/><path d="M6 17.5a4 4 0 0 0 5 0"/></svg>',
     sound: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a10 10 0 0 1 0 14"/></svg>',
+    grammar: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20h9"/><path d="M3 20h3l11-11a2.1 2.1 0 0 0-3-3L3 17v3z"/></svg>',
+    open: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M9 7h8v8"/></svg>',
     caret: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>',
     alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>',
     prev:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 18-6-6 6-6"/></svg>',
@@ -49,6 +51,12 @@
     goals:       { ja: 'このセクションで学ぶこと', en: "What you'll learn here" },
     literal:     { ja: '直訳',               en: 'Literally' },
     point:       { ja: 'ポイント',           en: 'Key point' },
+    grammar:     { ja: '文法',               en: 'Grammar' },
+    seeFull:     { ja: '詳しく',             en: 'Full entry' },
+    taughtIn:    { ja: '扱うセクション',      en: 'Taught in' },
+    examples:    { ja: '例',                 en: 'Examples' },
+    grammarRef:  { ja: '文法リファレンス',    en: 'Grammar reference' },
+    inThisSec:   { ja: 'このセクションの文法', en: 'Grammar in this section' },
     kana:        { ja: 'カナ',               en: 'KANA' },
     listen:      { ja: '発音を聞く',         en: 'Listen' },
     listenSlow:  { ja: 'ゆっくり聞く',       en: 'Listen slowly' },
@@ -161,6 +169,33 @@
       '<p>' + esc(text) + '</p>', 'disc--warm');
   }
 
+  /* The rules this phrase demonstrates, explained in place and
+     linked to the full entry. */
+  function grammarBlock(item, analysis, uid) {
+    if (!window.Grammar) return '';
+    var ids = window.Grammar.detect(item.fr, analysis, item.g, 3);
+    if (!ids.length) return '';
+
+    var body = ids.map(function (id) {
+      var e = window.Grammar.entry(id);
+      if (!e) return '';
+      return '<div class="gram__item">' +
+        '<button class="gram__open" data-gram="' + attr(id) + '">' +
+          '<span class="gram__name">' + esc(pick(e.title)) + '</span>' +
+          ICON.open +
+        '</button>' +
+        '<p class="gram__sum">' + esc(pick(e.summary)) + '</p>' +
+        '</div>';
+    }).join('');
+
+    var tag = ids.map(function (id) {
+      var e = window.Grammar.entry(id);
+      return e ? '<i>' + esc(pick(e.title).split(/[（(—-]/)[0].trim()) + '</i>' : '';
+    }).join('');
+
+    return disclosure(uid + 'g', ICON.grammar, ui('grammar'), tag, body, 'disc--blue');
+  }
+
   /* ---------------------------------------------------------
      Phrase card
      --------------------------------------------------------- */
@@ -187,6 +222,7 @@
       registerRow(item) +
       '<div class="card__more">' +
         whenBlock(item, uid) +
+        grammarBlock(item, a, uid) +
         warnings(view, uid, T(item, 'tip')) +
       '</div>' +
       '</div>';
@@ -300,6 +336,63 @@
   };
 
   /* ---------------------------------------------------------
+     Grammar reference
+     --------------------------------------------------------- */
+  function grammarEntry(e) {
+    var html = '<article class="gentry" id="g-' + esc(e.id) + '">' +
+      '<h3>' + esc(pick(e.title)) + '</h3>' +
+      '<p class="gentry__sum">' + esc(pick(e.summary)) + '</p>';
+
+    if (e.forms && e.forms.length) {
+      html += '<div class="conj">' + e.forms.map(function (f) {
+        var full = f.pronoun.split('/')[0].trim() + ' ' + f.form;
+        var a = window.Phonetics.analyze(full, f.ipa);
+        return '<div class="conj__row">' +
+          '<div class="conj__pro">' + esc(f.pronoun) + '</div>' +
+          '<div class="conj__form">' + esc(f.form) +
+            '<span class="conj__kana">' + esc(f.kana || a.kana) + '</span></div>' +
+          '<button class="pbtn" data-play="' + attr(full) + '" aria-label="' + ui('listen') + '">' +
+          ICON.play + '</button></div>';
+      }).join('') + '</div>';
+    }
+
+    var rules = e.rules ? (lang() === 'en' ? (e.rules.en || e.rules.ja) : (e.rules.ja || e.rules.en)) : null;
+    if (rules && rules.length) {
+      html += '<ul class="gentry__rules">' +
+        rules.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>';
+    }
+
+    if (e.ex && e.ex.length) {
+      html += '<div class="gentry__ex"><h4>' + ui('examples') + '</h4>' +
+        e.ex.map(function (x) {
+          var a = window.Phonetics.analyze(x.fr);
+          return '<div class="gex">' +
+            '<button class="pbtn" data-play="' + attr(x.fr) + '" aria-label="' + ui('listen') + '">' +
+              ICON.play + '</button>' +
+            '<div><div class="gex__fr">' + esc(x.fr) + '</div>' +
+              '<div class="gex__kana">' + esc(a.kana) + '</div>' +
+              '<div class="gex__gloss">' + esc(pick(x)) + '</div></div></div>';
+        }).join('') + '</div>';
+    }
+
+    if (e.sections && e.sections.length) {
+      html += '<div class="gentry__secs">' + ui('taughtIn') + ': ' +
+        e.sections.map(function (s) {
+          return '<button class="gsec" data-go="' + s + '" data-close-sheet="1">§' + s + '</button>';
+        }).join('') + '</div>';
+    }
+
+    return html + '</article>';
+  }
+
+  function grammarReference() {
+    return window.Grammar.categories().map(function (c) {
+      return '<section class="gcat"><h2>' + esc(pick(c.title)) + '</h2>' +
+        c.entries.map(grammarEntry).join('') + '</section>';
+    }).join('');
+  }
+
+  /* ---------------------------------------------------------
      Section
      --------------------------------------------------------- */
   function section(data) {
@@ -319,6 +412,15 @@
       html += '<div class="goals"><h3>' + ui('goals') + '</h3><ul>' +
         goals.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') +
         '</ul></div>';
+    }
+
+    var gsec = window.Grammar ? window.Grammar.forSection(data.id) : [];
+    if (gsec.length) {
+      html += '<div class="gsummary"><h3>' + ICON.grammar + ui('inThisSec') + '</h3><div>' +
+        gsec.map(function (e) {
+          return '<button class="gchip" data-gram="' + esc(e.id) + '">' +
+            esc(pick(e.title)) + '</button>';
+        }).join('') + '</div></div>';
     }
 
     html += data.blocks.map(function (b) {
@@ -351,6 +453,8 @@
     disclosure: disclosure,
     phraseCard: phraseCard,
     collectItems: collectItems,
+    grammarEntry: grammarEntry,
+    grammarReference: grammarReference,
     T: T,
     ui: ui,
     pick: pick,

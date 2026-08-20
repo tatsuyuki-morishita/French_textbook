@@ -616,6 +616,155 @@
 .switch.on::after { transform: translateX(18px); }
 
 /* ------------------------------------------------------------
+   Grammar — inline note on a card
+   ------------------------------------------------------------ */
+.disc--blue .disc__toggle { color: var(--accent); }
+
+.gram__item {
+  background: var(--accent-soft);
+  border-radius: var(--radius-sm);
+  padding: var(--s2) var(--s3);
+  margin-bottom: 3px;
+}
+.gram__item:last-child { margin-bottom: 0; }
+
+.gram__open {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
+  width: 100%;
+  text-align: left;
+  color: var(--accent-text);
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+.gram__open svg { width: 12px; height: 12px; opacity: 0.65; flex: 0 0 auto; }
+.gram__open:hover svg { opacity: 1; }
+.gram__name { flex: 1; min-width: 0; }
+.gram__sum {
+  margin: 3px 0 0;
+  font-size: 0.79rem;
+  line-height: 1.65;
+  color: var(--text-2);
+}
+
+/* section footer summary */
+.gsummary {
+  margin: var(--s6) 0 var(--s5);
+  padding: var(--s4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+.gsummary h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.45em;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-3);
+  margin-bottom: var(--s3);
+}
+.gsummary h3 svg { width: 14px; height: 14px; }
+.gsummary > div { display: flex; flex-wrap: wrap; gap: var(--s2); }
+
+.gchip {
+  padding: 0.32em 0.8em;
+  border-radius: 99px;
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  background: var(--accent-soft);
+  color: var(--accent-text);
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+.gchip:hover { background: color-mix(in srgb, var(--accent) 18%, transparent); }
+
+/* ------------------------------------------------------------
+   Grammar — the reference sheet
+   ------------------------------------------------------------ */
+.gcat { margin-bottom: var(--s6); }
+.gcat > h2 {
+  position: sticky;
+  top: calc(var(--s4) * -1);
+  z-index: 2;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  padding: var(--s3) 0 var(--s2);
+  margin-bottom: var(--s3);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.gentry {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: var(--s4);
+  margin-bottom: var(--s3);
+  scroll-margin-top: var(--s6);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+.gentry.is-target {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.gentry h3 { font-size: 1.02rem; margin-bottom: var(--s2); }
+.gentry__sum { font-size: 0.87rem; color: var(--text-2); margin-bottom: var(--s3); }
+.gentry .conj { margin-bottom: var(--s3); }
+
+.gentry__rules { margin: 0 0 var(--s3); padding-left: 1.1rem; }
+.gentry__rules li {
+  font-size: 0.83rem;
+  line-height: 1.7;
+  color: var(--text-2);
+  margin-bottom: var(--s1);
+}
+.gentry__rules li::marker { color: var(--accent); }
+
+.gentry__ex h4 {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  margin-bottom: var(--s2);
+}
+.gex {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s3);
+  padding: var(--s2) 0;
+  border-top: 1px dashed var(--line);
+}
+.gex .pbtn { width: 30px; height: 30px; }
+.gex .pbtn svg { width: 12px; height: 12px; }
+.gex__fr { font-family: var(--serif); font-size: 1rem; font-weight: 600; }
+.gex__kana { font-size: 0.73rem; color: var(--text-3); }
+.gex__gloss { font-size: 0.82rem; color: var(--text-2); margin-top: 1px; }
+
+.gentry__secs {
+  margin-top: var(--s3);
+  padding-top: var(--s3);
+  border-top: 1px solid var(--line);
+  font-size: 0.75rem;
+  color: var(--text-3);
+}
+.gsec {
+  display: inline-block;
+  margin-left: var(--s2);
+  padding: 0.15em 0.6em;
+  border-radius: 99px;
+  background: var(--surface-2);
+  color: var(--text-2);
+  font-size: 0.74rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+}
+.gsec:hover { background: var(--accent-soft); color: var(--accent-text); }
+
+/* ------------------------------------------------------------
    Language switch
    ------------------------------------------------------------ */
 .langswitch {
@@ -642,6 +791,9 @@
   background: var(--accent);
   color: #fff;
 }
+/* the header has four other controls competing for a 360px bar */
+.langswitch--tight button { padding: 0.2rem 0.45rem; font-size: 0.68rem; }
+
 .langswitch--wide { width: 100%; }
 .langswitch--wide button { flex: 1; padding: 0.35rem 0.6rem; font-size: 0.76rem; }
 

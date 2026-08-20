@@ -33,6 +33,8 @@
     gotIt:       { ja: '覚えた',            en: 'Got it' },
     reveal:      { ja: '答えを見る',        en: 'Show answer' },
     listen:      { ja: '聞く',              en: 'Listen' },
+    grammarRef:  { ja: '文法リファレンス',  en: 'Grammar reference' },
+    grammarBtn:  { ja: '文法',              en: 'Grammar' },
     language:    { ja: '表示言語',          en: 'Display language' },
     languageSub: { ja: '解説と訳の言語。フランス語はそのまま',
                    en: 'Language of explanations and glosses' },
@@ -318,6 +320,26 @@
     }
   }
 
+  /* ----- grammar reference ----- */
+  var gramBuilt = false;
+
+  function openGrammar(entryId) {
+    if (!gramBuilt || $('#gramBody').dataset.lang !== lang()) {
+      $('#gramBody').innerHTML = window.Render.grammarReference();
+      $('#gramBody').dataset.lang = lang();
+      gramBuilt = true;
+    }
+    openSheet('#gramSheet');
+    var target = entryId && $('#g-' + entryId);
+    if (target) {
+      target.scrollIntoView({ block: 'start' });
+      target.classList.add('is-target');
+      setTimeout(function () { target.classList.remove('is-target'); }, 1600);
+    } else {
+      $('#gramBody').scrollTop = 0;
+    }
+  }
+
   /* ----- settings ----- */
   function renderSettings() {
     var s = window.Store;
@@ -380,6 +402,8 @@
     syncLangButtons();
     applyShellLabels();
     go(current);
+    gramBuilt = false;
+    if ($('#gramSheet').classList.contains('is-open')) openGrammar(null);
     if ($('#settingsSheet').classList.contains('is-open')) renderSettings();
     if ($('#fcSheet').classList.contains('is-open')) renderCard();
     if ($('#searchSheet').classList.contains('is-open')) runSearch($('#searchInput').value);
@@ -401,7 +425,9 @@
       ['#fcSheetTitle', 'text', en ? 'Flashcards' : 'フラッシュカード'],
       ['#settingsSheetTitle', 'text', en ? 'Settings' : '設定'],
       ['#navSearchBtn', 'text', en ? 'Search' : '検索'],
-      ['#navCardsBtn', 'text', en ? 'Cards' : 'カード']
+      ['#navCardsBtn', 'text', en ? 'Cards' : 'カード'],
+      ['#navGrammarBtn', 'text', en ? 'Grammar' : '文法'],
+      ['#gramSheetTitle', 'text', en ? 'Grammar reference' : '文法リファレンス']
     ];
     map.forEach(function (m) {
       var el = $(m[0]);
@@ -444,6 +470,9 @@
 
     var opt = t.closest('.opt');
     if (opt && !opt.disabled) { answerQuiz(opt); return; }
+
+    var gram = t.closest('[data-gram]');
+    if (gram) { openGrammar(gram.dataset.gram); return; }
 
     var goEl = t.closest('[data-go]');
     if (goEl) {
@@ -503,6 +532,7 @@
     if (t.closest('#backdrop'))  { openNav(false); return; }
     if (t.closest('[data-open-search]'))   { openSheet('#searchSheet'); $('#searchInput').focus(); runSearch(''); return; }
     if (t.closest('[data-open-cards]'))    { buildDeck(); renderCard(); openSheet('#fcSheet'); return; }
+    if (t.closest('[data-open-grammar]'))  { openGrammar(null); return; }
     if (t.closest('[data-open-settings]')) { renderSettings(); openSheet('#settingsSheet'); return; }
     if (t.closest('[data-close-sheet]') || (t.classList && t.classList.contains('sheet'))) {
       openSheet(null);

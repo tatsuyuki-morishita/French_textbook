@@ -69,6 +69,18 @@ window.LEXICON = {
   'vingt': 'vɛ̃', 'trente': 'tʁɑ̃t', 'quarante': 'kaʁɑ̃t',
   'cinquante': 'sɛ̃kɑ̃t', 'soixante': 'swasɑ̃t',
   'cent': 'sɑ̃', 'cents': 'sɑ̃', 'premier': 'pʁəmje', 'première': 'pʁəmjɛʁ',
+  'zéro': 'zeʁo', 'mille': 'mil',
+  /* the x of deux/six/dix voices to /z/ before -ième */
+  'deuxième': 'døzjɛm', 'sixième': 'sizjɛm', 'dixième': 'dizjɛm',
+  'neuvième': 'nœvjɛm', 'millier': 'milje', 'million': 'miljɔ̃', 'milliard': 'miljaʁ',
+  'millions': 'miljɔ̃', 'milliards': 'miljaʁ',
+  /* the x of dix turns to /z/ in 18 and 19 but stays /s/ in 17 */
+  'dix-sept': 'disɛt', 'dix-huit': 'dizɥit', 'dix-neuf': 'diznœf',
+  'quatre-vingts': 'katʁəvɛ̃', 'quatre-vingt': 'katʁəvɛ̃',
+  'soixante-dix': 'swasɑ̃tdis', 'quatre-vingt-dix': 'katʁəvɛ̃dis',
+  'vingt-et-un': 'vɛ̃teœ̃', 'trente-et-un': 'tʁɑ̃teœ̃', 'quarante-et-un': 'kaʁɑ̃teœ̃',
+  'soixante-et-onze': 'swasɑ̃teɔ̃z', 'quatre-vingt-un': 'katʁəvɛ̃œ̃',
+  'quatre-vingt-dix-neuf': 'katʁəvɛ̃diznœf',
 
   /* ---------- -ent / -ant words that ARE pronounced ---------- */
   'comment': 'kɔmɑ̃', 'souvent': 'suvɑ̃', 'vraiment': 'vʁɛmɑ̃',
@@ -169,6 +181,8 @@ window.LEXICON = {
   'jeune': 'ʒœn', 'vieux': 'vjø', 'vieille': 'vjɛj',
   'blanc': 'blɑ̃', 'blanche': 'blɑ̃ʃ', 'noir': 'nwaʁ', 'vert': 'vɛʁ',
   'rouge': 'ʁuʒ', 'bleu': 'blø', 'jaune': 'ʒon',
+  'patient': 'pasjɑ̃', 'patiente': 'pasjɑ̃t', 'impatient': 'ɛ̃pasjɑ̃',
+  'tennis': 'tenis', 'bus': 'bys', 'tunnel': 'tynɛl', 'internet': 'ɛ̃tɛʁnɛt',
   'restaurant': 'ʁɛstoʁɑ̃', 'cinéma': 'sinema', 'théâtre': 'teɑtʁ',
   'gare': 'gaʁ', 'aéroport': 'aeʁɔpɔʁ', 'hôtel': 'otɛl', 'hôpital': 'ɔpital',
   'magasin': 'magazɛ̃', 'marché': 'maʁʃe', 'banque': 'bɑ̃k',
@@ -180,6 +194,9 @@ window.LEXICON = {
 
 /* Words whose final -s / -x / -t IS pronounced, against the general rule.
    Kept separate so phonetics.js can consult it during final-consonant handling. */
+/* "vingt" is /vɛ̃/ alone but /vɛ̃t/ inside 22-29. */
+window.HYPHEN_FORMS = { 'vingt': 'vɛ̃t' };
+
 window.PRONOUNCED_FINAL = new Set([
   'fils', 'os', 'sens', 'ours', 'tous', 'plus', 'mars', 'six', 'dix',
   'bus', 'plus', 'sud', 'ouest', 'est', 'août', 'net', 'chut'

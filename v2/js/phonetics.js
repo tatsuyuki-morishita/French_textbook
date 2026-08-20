@@ -117,7 +117,11 @@
       if (/^eau/.test(rest)) { out += 'o'; i += 3; continue; }
       if (/^oin/.test(rest) && nasalOK(w, i, 3)) { out += 'wɛ̃'; i += 3; continue; }
       if (/^(ain|ein|aim|eim)/.test(rest) && nasalOK(w, i, 3)) { out += 'ɛ̃'; i += 3; continue; }
-      if (/^ien/.test(rest) && nasalOK(w, i, 3)) { out += 'jɛ̃'; i += 3; continue; }
+      if (/^ien/.test(rest) && nasalOK(w, i, 3)) {
+        var tailOnly = (i + 3 >= n) || (silentFrom >= 0 && i + 3 >= silentFrom);
+        out += tailOnly ? 'jɛ̃' : 'jɑ̃';
+        i += 3; continue;
+      }
       if (/^ill/.test(rest)) {
         out += isV(w[i - 1]) ? 'j' : 'ij';
         i += 3; continue;
@@ -162,7 +166,13 @@
         case 'a': case 'à': case 'â': case 'ä': out += 'a'; matched = true; break;
         case 'é': out += 'e'; matched = true; break;
         case 'è': case 'ê': case 'ë': out += 'ɛ'; matched = true; break;
-        case 'i': case 'î': case 'ï': out += 'i'; matched = true; break;
+        case 'i': {
+          var nx = w[i + 1];
+          var silentFinalE = (nx === 'e' && i + 1 === n - 1);
+          out += (isV(nx) && !silentFinalE) ? 'j' : 'i';
+          matched = true; break;
+        }
+        case 'î': case 'ï': out += 'i'; matched = true; break;
         case 'ô': out += 'o'; matched = true; break;
         case 'o': out += last ? 'o' : 'ɔ'; matched = true; break;
         case 'u': case 'ù': case 'û': case 'ü': out += 'y'; matched = true; break;
@@ -240,12 +250,20 @@
       }
     }
 
-    /* Hyphenated compounds: process each part. */
+    /* Hyphenated compounds: each part is a word, and liaison applies
+       across the hyphens too (vingt-et-un -> /vɛ̃teœ̃/). */
     if (word.indexOf('-') >= 0) {
-      return prefix + word.split('-').filter(Boolean).map(function (p) {
-        var l = window.lookupLexicon(p);
-        return l !== null ? l : coreToIPA(p);
-      }).join('');
+      var parts = word.split('-').filter(Boolean);
+      var acc = '';
+      for (var pi = 0; pi < parts.length; pi++) {
+        /* only as the leading element: vingt-deux is /vɛ̃tdø/ but the
+           vingt inside quatre-vingt-quinze keeps its t silent */
+        var hy = pi === 0 && pi < parts.length - 1 && window.HYPHEN_FORMS[parts[pi]];
+        var lex3 = hy || window.lookupLexicon(parts[pi]);
+        acc += (lex3 !== null && lex3 !== undefined ? lex3 : coreToIPA(parts[pi]));
+        if (pi < parts.length - 1) acc += liaisonFor(parts[pi], parts[pi + 1]);
+      }
+      return prefix + acc;
     }
 
     return prefix + coreToIPA(word);
@@ -370,7 +388,11 @@
         continue;
       }
       if (ROW[s] && next === 'ɥ') { out += (Y_COL[s] || ROW[s][2] + 'ュ'); i += 2; continue; }
-      if (ROW[s] && next === 'j') { out += ROW[s][1]; i++; continue; }
+      if (ROW[s] && next === 'j') {
+        var after = syl[i + 2];
+        if (after === 'e' || after === 'ɛ') { out += ROW[s][1] + 'エ'; i += 3; continue; }
+        out += ROW[s][1]; i++; continue;
+      }
       if (s === 'ɥ') { out += 'ユ'; i++; continue; }
       if (ROW[s]) { out += ROW[s][2]; i++; continue; }   // bare consonant
       if (BARE_VOWEL[s]) { out += BARE_VOWEL[s]; i++; continue; }

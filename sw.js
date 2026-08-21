@@ -13,7 +13,10 @@
    on activate.
    ============================================================ */
 
-const CACHE = 'francais-761779b122';
+const CACHE = 'francais-0dc7556cac';
+
+/* Written last, so its presence means the whole precache succeeded. */
+const MARKER = 'offline-complete';
 
 /* index.html is the only shell entry. Caching './' as well stored a
    second copy of the same page, and the stale one won. */
@@ -95,21 +98,39 @@ function fetchFresh(url) {
 }
 
 self.addEventListener('install', event => {
+  /* Held in scope on purpose: the value passed on from Promise.all is the
+     array of results, not the cache, and calling .put on that array throws
+     and leaves the completion marker unwritten. */
+  let theCache = null;
+
   event.waitUntil(
     caches.open(CACHE)
-      /* One rejection would abort the whole batch and leave the app with no
-         offline copy at all, so each entry succeeds or fails alone. */
-      .then(cache => Promise.all(
-        ASSETS.map(url =>
-          fetchFresh(url)
-            .then(res => {
-              if (!res || !res.ok) throw new Error('HTTP ' + (res && res.status));
-              return cache.put(url, res);
-            })
-            .catch(err => { console.warn('[sw] could not cache', url, err); })
-        )
-      ))
+      .then(cache => {
+        theCache = cache;
+        /* One rejection would abort the whole batch and leave the app with
+           no offline copy at all, so each entry succeeds or fails alone. */
+        return Promise.all(
+          ASSETS.map(url =>
+            fetchFresh(url)
+              .then(res => {
+                if (!res || !res.ok) throw new Error('HTTP ' + (res && res.status));
+                return theCache.put(url, res);
+              })
+              .catch(err => { console.warn('[sw] could not cache', url, err); })
+          )
+        );
+      })
+      /* Activation on its own does not prove the assets are there. This
+         marker is written only after every put resolves, so the page can
+         report what is actually stored instead of inferring it. */
+      .then(() => theCache.put(MARKER, new Response(
+        JSON.stringify({ total: ASSETS.length, cache: CACHE, at: Date.now() }),
+        { headers: { 'Content-Type': 'application/json' } }
+      )))
       .then(() => self.skipWaiting())
+      .then(() => self.clients.matchAll({ includeUncontrolled: true }))
+      .then(clients => clients.forEach(c => c.postMessage({ type: 'cached', total: ASSETS.length })))
+      .catch(err => { console.error('[sw] install failed', err); })
   );
 });
 

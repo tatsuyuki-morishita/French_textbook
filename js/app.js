@@ -52,6 +52,15 @@
     ipaSub:      { ja: '国際音声記号',      en: 'International Phonetic Alphabet' },
     engine:      { ja: '音声エンジン',      en: 'Speech voice' },
     offline:     { ja: 'オフライン利用',    en: 'Offline use' },
+    barSaving:   { ja: '<b>オフライン用に保存中…</b> 完了するまで通信を切らないでください',
+                   en: '<b>Saving for offline use…</b> stay connected until this finishes' },
+    barDone:     { ja: '<b>オフラインで使えます。</b> 機内モードでも開けます',
+                   en: '<b>Ready offline.</b> It will open in airplane mode' },
+    barDoneHome: { ja: '<b>オフラインで使えます。</b> 共有ボタン →「ホーム画面に追加」で、アプリのように開けます',
+                   en: '<b>Ready offline.</b> Share → Add to Home Screen to open it like an app' },
+    barFailed:   { ja: '<b>保存できませんでした。</b> 通信のある場所で再試行してください',
+                   en: '<b>Could not save.</b> Try again where you have a connection' },
+    barRetry:    { ja: '再試行',            en: 'Retry' },
     offReady:    { ja: '端末に保存済み。通信なしで使えます',
                    en: 'Saved on this device. Works with no connection' },
     offSaving:   { ja: '保存中…',           en: 'Saving…' },
@@ -60,6 +69,7 @@
     offUnsup:    { ja: 'このブラウザは非対応です',
                    en: 'This browser does not support it' },
     offFailed:   { ja: '保存できませんでした', en: 'Could not save' },
+    redownload:  { ja: '再取得',            en: 'Re-download' },
     addHome:     { ja: 'ホーム画面に追加すると全画面で開けます',
                    en: 'Add to Home Screen to open it full-screen' },
     notFound:    { ja: '未検出',            en: 'not detected' },
@@ -351,6 +361,67 @@
     }
   }
 
+  /* ---------------------------------------------------------
+     Offline banner
+     ---------------------------------------------------------
+     Whether the course has finished downloading is the one thing
+     a user cannot otherwise discover until they are already in
+     airplane mode, so it gets stated on the page rather than
+     buried in settings. */
+  var offBarDismissed = false;
+  var sawInstalling = false;
+
+  var ICON_OK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var ICON_BAD = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>';
+
+  function paintOfflineBar(st) {
+    var bar = $('#offBar');
+    if (!bar) return;
+
+    if (offBarDismissed || st.state === 'insecure' || st.state === 'unsupported' ||
+        st.state === 'unknown') {
+      bar.classList.remove('show');
+      return;
+    }
+
+    var icon = $('#offBarIcon'), text = $('#offBarText'), act = $('#offBarAct');
+    bar.classList.remove('offbar--ok', 'offbar--bad', 'offbar--busy');
+    act.hidden = true;
+
+    if (st.state === 'installing') {
+      sawInstalling = true;
+      bar.classList.add('show', 'offbar--busy');
+      icon.innerHTML = '';
+      text.innerHTML = t('barSaving') + (st.cached ? ' (' + st.cached + ')' : '');
+    } else if (st.state === 'ready') {
+      /* Nothing to announce on a repeat visit that was already cached. */
+      if (!sawInstalling) { bar.classList.remove('show'); return; }
+      bar.classList.add('show', 'offbar--ok');
+      icon.innerHTML = ICON_OK;
+      text.innerHTML = window.Offline.isStandalone() ? t('barDone') : t('barDoneHome');
+      setTimeout(function () { bar.classList.remove('show'); }, 12000);
+    } else if (st.state === 'failed') {
+      bar.classList.add('show', 'offbar--bad');
+      icon.innerHTML = ICON_BAD;
+      text.innerHTML = t('barFailed');
+      act.hidden = false;
+      act.textContent = t('barRetry');
+    }
+  }
+
+  function initOfflineBar() {
+    if (!window.Offline) return;
+    window.Offline.onChange(paintOfflineBar);
+    $('#offBarClose').addEventListener('click', function () {
+      offBarDismissed = true;
+      $('#offBar').classList.remove('show');
+    });
+    $('#offBarAct').addEventListener('click', function () {
+      offBarDismissed = false;
+      window.Offline.reinstall();
+    });
+  }
+
   /* ----- settings ----- */
 
   /* Whether the course is actually stored on the device. Worth stating
@@ -358,11 +429,11 @@
      verify without turning their connection off and hoping. */
   function offlineRow() {
     if (!window.Offline) return '';
-    var st = window.Offline.status().state;
+    var o = window.Offline.status();
+    var st = o.state;
     var text =
-      st === 'ready'      ? t('offReady') :
-      st === 'installing' ? t('offSaving') :
-      st === 'updating'   ? t('offSaving') :
+      st === 'ready'      ? t('offReady') + '（' + o.total + '）' :
+      st === 'installing' ? t('offSaving') + (o.cached ? ' ' + o.cached : '') :
       st === 'insecure'   ? t('offInsecure') :
       st === 'unsupported'? t('offUnsup') :
       st === 'failed'     ? t('offFailed') : t('offSaving');
@@ -370,8 +441,11 @@
     var hint = (st === 'ready' && !window.Offline.isStandalone())
       ? '<span>' + t('addHome') + '</span>' : '';
 
+    var canRetry = st === 'ready' || st === 'failed';
+
     return '<div class="setting"><div class="setting__label"><b>' + t('offline') + '</b>' +
       '<span>' + esc(text) + '</span>' + hint + '</div>' +
+      (canRetry ? '<button class="btn btn--sm" data-offline-reinstall="1">' + t('redownload') + '</button>' : '') +
       '<span class="dot dot--' + (st === 'ready' ? 'ok' : st === 'failed' || st === 'unsupported' ? 'bad' : 'wait') + '"></span>' +
       '</div>';
   }
@@ -554,6 +628,14 @@
       return;
     }
 
+    if (t.closest('[data-offline-reinstall]')) {
+      window.Offline.reinstall().then(function () {
+        setTimeout(renderSettings, 400);
+      });
+      renderSettings();
+      return;
+    }
+
     if (t.closest('[data-reset]')) {
       if (confirm(t('confirmWipe'))) {
         window.Store.reset();
@@ -619,6 +701,7 @@
   syncLangButtons();
   applyShellLabels();
   window.Audio2.onStatusChange(updateVoiceWarning);
+  initOfflineBar();
   setTimeout(updateVoiceWarning, 1500);
 
   var fromHash = parseInt((location.hash || '').replace('#', ''), 10);

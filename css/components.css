@@ -497,6 +497,67 @@
 .voicewarn b { color: var(--text); }
 
 /* ------------------------------------------------------------
+   Offline status bar
+   ------------------------------------------------------------ */
+.offbar {
+  display: none;
+  align-items: center;
+  gap: var(--s3);
+  padding: var(--s3) var(--s4);
+  margin-bottom: var(--s5);
+  border-radius: var(--radius);
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--text-2);
+}
+.offbar.show { display: flex; }
+.offbar--ok   { border-color: color-mix(in srgb, var(--ok) 40%, transparent);  background: var(--ok-soft); }
+.offbar--bad  { border-color: color-mix(in srgb, var(--bad) 40%, transparent); background: var(--bad-soft); }
+.offbar--busy { border-color: color-mix(in srgb, var(--gold) 40%, transparent);background: var(--gold-soft); }
+
+.offbar__text { flex: 1; min-width: 0; }
+.offbar__text b { color: var(--text); font-weight: 700; }
+
+.offbar__icon { flex: 0 0 auto; width: 18px; height: 18px; display: grid; place-items: center; }
+.offbar__icon svg { width: 18px; height: 18px; }
+.offbar--ok  .offbar__icon { color: var(--ok); }
+.offbar--bad .offbar__icon { color: var(--bad); }
+
+/* a ring that turns while the assets are downloading */
+.offbar--busy .offbar__icon::before {
+  content: "";
+  width: 15px; height: 15px;
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--gold) 35%, transparent);
+  border-top-color: var(--gold);
+  animation: offspin 0.8s linear infinite;
+}
+@keyframes offspin { to { transform: rotate(360deg); } }
+
+.offbar__act {
+  flex: 0 0 auto;
+  padding: 0.3rem 0.7rem;
+  border-radius: 99px;
+  border: 1px solid var(--line-strong);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text);
+  background: var(--surface);
+}
+.offbar__act:hover { background: var(--surface-hover); }
+.offbar__close {
+  flex: 0 0 auto;
+  width: 26px; height: 26px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  line-height: 1;
+  color: var(--text-3);
+}
+.offbar__close:hover { background: var(--surface-hover); color: var(--text); }
+
+/* ------------------------------------------------------------
    Panels (search, flashcards, settings)
    ------------------------------------------------------------ */
 .sheet {

@@ -7,32 +7,83 @@
    opening the folder from Files or iCloud Drive does not let
    Safari reach the sibling css/, js/, and data/ files.
 
-   Service workers require a secure context, so this is inert on
-   file:// — there the page still works, it simply has nothing to
-   install. Status is surfaced in Settings rather than as a toast,
-   so it can be checked deliberately instead of interrupting.
+   Readiness is taken from a marker the service worker writes
+   after the last asset is stored — not from activation, which
+   says only that the worker started, not that anything landed.
+
+   iOS keeps a Home Screen web app in its own storage container,
+   separate from Safari's. Caching done in Safari therefore does
+   not carry over, and the installed app has to be opened once
+   while online to fill its own cache. The banner exists to make
+   that moment visible instead of leaving it to be discovered in
+   airplane mode.
    ============================================================ */
 
 (function () {
   'use strict';
 
-  var state = 'unknown';
-  var detail = '';
-  var listeners = [];
+  var MARKER = 'offline-complete';
 
-  function set(next, text) {
+  var state = 'unknown';   /* unknown | installing | ready | insecure | unsupported | failed */
+  var cached = 0;
+  var total = 0;
+  var listeners = [];
+  var pollTimer = null;
+
+  function emit() {
+    var s = status();
+    listeners.forEach(function (fn) { fn(s); });
+  }
+
+  function set(next) {
+    if (next === state) return;
     state = next;
-    detail = text || '';
-    listeners.forEach(function (fn) { fn(status()); });
+    emit();
   }
 
   function status() {
-    return { state: state, detail: detail };
+    return { state: state, cached: cached, total: total };
   }
 
   function onChange(fn) {
     listeners.push(fn);
     fn(status());
+  }
+
+  /* Ask the cache directly rather than trusting the worker's lifecycle. */
+  function inspect() {
+    if (!window.caches) return Promise.resolve(false);
+    return caches.keys().then(function (names) {
+      var name = names.filter(function (n) { return n.indexOf('francais-') === 0; })[0];
+      if (!name) return false;
+      return caches.open(name).then(function (c) {
+        return Promise.all([c.keys(), c.match(MARKER)]).then(function (r) {
+          cached = r[0].length;
+          if (!r[1]) { emit(); return false; }
+          return r[1].json().then(function (meta) {
+            total = meta.total || cached;
+            return true;
+          }).catch(function () { total = cached; return true; });
+        });
+      });
+    }).catch(function () { return false; });
+  }
+
+  function poll() {
+    if (pollTimer) return;
+    var tries = 0;
+    pollTimer = setInterval(function () {
+      tries++;
+      inspect().then(function (done) {
+        if (done) {
+          clearInterval(pollTimer); pollTimer = null;
+          set('ready');
+        } else if (tries > 120) {          /* ~60s */
+          clearInterval(pollTimer); pollTimer = null;
+          if (state === 'installing') set('failed');
+        }
+      });
+    }, 500);
   }
 
   var secure = location.protocol === 'https:' ||
@@ -42,52 +93,55 @@
   if (!('serviceWorker' in navigator)) {
     set('unsupported');
   } else if (!secure) {
-    /* file:// or plain http on a LAN address */
-    set('insecure');
+    set('insecure');                       /* file:// — nothing to install */
   } else {
-    set('installing');
+    navigator.serviceWorker.addEventListener('message', function (e) {
+      if (e.data && e.data.type === 'cached') {
+        total = e.data.total || total;
+        inspect().then(function (done) { if (done) set('ready'); });
+      }
+    });
 
-    window.addEventListener('load', function () {
-      navigator.serviceWorker.register('sw.js')
-        .then(function (reg) {
-          if (navigator.serviceWorker.controller) {
-            set('ready');
-          } else {
-            /* First visit: wait for the install to finish before
-               claiming the course is actually available offline. */
-            var sw = reg.installing || reg.waiting;
-            if (!sw) { set('ready'); return; }
-            sw.addEventListener('statechange', function () {
-              if (sw.state === 'activated' || sw.state === 'redundant') set('ready');
-            });
-          }
-          reg.addEventListener('updatefound', function () { set('updating'); });
-        })
-        .catch(function (err) {
-          set('failed', String(err && err.message ? err.message : err));
-        });
+    /* Look before announcing. Declaring 'installing' up front would make
+       every repeat visit pass through it, and the UI would report a
+       download that already happened. */
+    inspect().then(function (done) {
+      set(done ? 'ready' : 'installing');
 
-      navigator.serviceWorker.addEventListener('controllerchange', function () {
-        set('ready');
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js')
+          .then(function () { if (!done) poll(); })
+          .catch(function () { if (!done) set('failed'); });
       });
     });
   }
 
-  /** Bytes currently held for this origin, when the browser will say. */
-  function usage() {
-    if (!navigator.storage || !navigator.storage.estimate) return Promise.resolve(null);
-    return navigator.storage.estimate()
-      .then(function (e) { return e && e.usage ? e.usage : null; })
-      .catch(function () { return null; });
+  function isStandalone() {
+    return window.matchMedia('(display-mode: standalone)').matches ||
+           window.navigator.standalone === true;
+  }
+
+  /* Wipes the caches and re-registers, for when an install went wrong. */
+  function reinstall() {
+    if (!window.caches) return Promise.resolve();
+    set('installing');
+    cached = 0;
+    return caches.keys()
+      .then(function (names) {
+        return Promise.all(names.map(function (n) { return caches.delete(n); }));
+      })
+      .then(function () { return navigator.serviceWorker.getRegistrations(); })
+      .then(function (rs) { return Promise.all(rs.map(function (r) { return r.unregister(); })); })
+      .then(function () { return navigator.serviceWorker.register('sw.js'); })
+      .then(function () { poll(); })
+      .catch(function () { set('failed'); });
   }
 
   window.Offline = {
     status: status,
     onChange: onChange,
-    usage: usage,
-    isStandalone: function () {
-      return window.matchMedia('(display-mode: standalone)').matches ||
-             window.navigator.standalone === true;
-    }
+    inspect: inspect,
+    reinstall: reinstall,
+    isStandalone: isStandalone
   };
 })();

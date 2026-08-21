@@ -2,22 +2,22 @@
    Index-aligned merges fail silently if a block is added or reordered,
    so this asserts the shapes match before anything reaches the page. */
 global.window = {};
-require('./v2/js/phonemes.js');
-require('./v2/js/lexicon.js');
-require('./v2/js/phonetics.js');
-require('./v2/data/curriculum.js');
+require('./js/phonemes.js');
+require('./js/lexicon.js');
+require('./js/phonetics.js');
+require('./data/curriculum.js');
 for (const m of window.CURRICULUM.sections) {
-  require('./v2/data/sections/s' + String(m.id).padStart(2, '0') + '.js');
+  require('./data/sections/s' + String(m.id).padStart(2, '0') + '.js');
 }
 
 const fs = require('fs');
-const dir = './v2/data/en';
+const dir = './data/en';
 if (fs.existsSync(dir)) {
   for (const f of fs.readdirSync(dir).filter(x => x.endsWith('.js')).sort()) {
     require(dir + '/' + f);
   }
 }
-require('./v2/js/i18n.js');
+require('./js/i18n.js');
 
 const problems = [];
 let translated = 0, fields = 0;

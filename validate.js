@@ -1,17 +1,17 @@
 /* Loads every v2 data file the way the browser does and checks that each
    French string resolves to IPA, katakana, and an English-style reading. */
 global.window = {};
-require('./v2/js/phonemes.js');
-require('./v2/js/lexicon.js');
-require('./v2/js/phonetics.js');
-require('./v2/data/curriculum.js');
+require('./js/phonemes.js');
+require('./js/lexicon.js');
+require('./js/phonetics.js');
+require('./data/curriculum.js');
 
 const fs = require('fs');
 const P = window.Phonetics;
 let done = 0, pending = [], items = 0, problems = [];
 
 for (const meta of window.CURRICULUM.sections) {
-  const f = './v2/data/sections/s' + String(meta.id).padStart(2, '0') + '.js';
+  const f = './data/sections/s' + String(meta.id).padStart(2, '0') + '.js';
   try { require(f); } catch (e) { problems.push(`s${meta.id}: LOAD ERROR ${e.message}`); continue; }
   const S = window['S' + meta.id];
   if (!S) { pending.push(meta.id); continue; }

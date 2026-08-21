@@ -1,7 +1,7 @@
 global.window = {};
-require('./v2/js/phonemes.js');
-require('./v2/js/lexicon.js');
-require('./v2/js/phonetics.js');
+require('./js/phonemes.js');
+require('./js/lexicon.js');
+require('./js/phonetics.js');
 const P = window.Phonetics;
 const cases = [
   ['Bonjour','bɔ̃ʒuʁ'],['Salut','saly'],['Merci','mɛʁsi'],['Au revoir','o ʁəvwaʁ'],

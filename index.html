@@ -1,312 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Learn French">
-    <meta name="theme-color" content="#0055A4">
-    <meta name="mobile-web-app-capable" content="yes">
-    <title>Learn French - Complete A0-A2 Course</title>
-    <link rel="stylesheet" href="styles.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Open+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="A0–A2 French course with audio, katakana and IPA pronunciation, and situational usage notes for Japanese speakers.">
+<meta name="theme-color" content="#FAF9F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#121218" media="(prefers-color-scheme: dark)">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Français">
+<title>Français A0–A2</title>
+<link rel="stylesheet" href="css/tokens.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/components.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🇫🇷</text></svg>">
 </head>
 <body>
-    <!-- Sidebar Navigation -->
-    <nav class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <div class="logo">
-                <span class="flag">🇫🇷</span>
-                <h1>Français</h1>
-            </div>
-            <p class="tagline">A0 → A2 Journey</p>
-        </div>
 
-        <div class="progress-overview">
-            <div class="progress-bar">
-                <div class="progress-fill" id="overallProgress"></div>
-            </div>
-            <span class="progress-text">0% Complete</span>
-        </div>
+<!-- ---------- mobile header ---------- -->
+<header class="header">
+  <button class="icon-btn" id="menuBtn" aria-label="目次を開く">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+  </button>
+  <span class="header__title" id="headerTitle">Français</span>
+  <div class="langswitch langswitch--tight" role="group" aria-label="Display language">
+    <button data-lang="ja">JA</button><button data-lang="en">EN</button>
+  </div>
+  <button class="icon-btn" data-open-search aria-label="検索">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+  </button>
+  <button class="icon-btn" data-open-cards aria-label="フラッシュカード">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="15" height="13" rx="2"/><path d="M7 3h12a2 2 0 0 1 2 2v11"/></svg>
+  </button>
+</header>
 
-        <div class="nav-sections">
-            <!-- Foundation -->
-            <div class="nav-category">
-                <h3><i class="fas fa-seedling"></i> Foundation (A0)</h3>
-                <ul>
-                    <li class="nav-item active" data-section="1">
-                        <span class="section-number">1</span>
-                        <span class="section-title">Introducing Yourself & Alphabet</span>
-                        <span class="duration">55 min</span>
-                    </li>
-                    <li class="nav-item" data-section="2">
-                        <span class="section-number">2</span>
-                        <span class="section-title">Nationalities & Être</span>
-                        <span class="duration">26 min</span>
-                    </li>
-                    <li class="nav-item" data-section="3">
-                        <span class="section-number">3</span>
-                        <span class="section-title">Greetings & Goodbye</span>
-                        <span class="duration">21 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Building Blocks -->
-            <div class="nav-category">
-                <h3><i class="fas fa-cubes"></i> Building Blocks (A0-A1)</h3>
-                <ul>
-                    <li class="nav-item" data-section="4">
-                        <span class="section-number">4</span>
-                        <span class="section-title">Numbers Part 1</span>
-                        <span class="duration">23 min</span>
-                    </li>
-                    <li class="nav-item" data-section="5">
-                        <span class="section-number">5</span>
-                        <span class="section-title">Talking About Yourself 1</span>
-                        <span class="duration">28 min</span>
-                    </li>
-                    <li class="nav-item" data-section="6">
-                        <span class="section-number">6</span>
-                        <span class="section-title">Talking About Yourself 2</span>
-                        <span class="duration">24 min</span>
-                    </li>
-                    <li class="nav-item" data-section="7">
-                        <span class="section-number">7</span>
-                        <span class="section-title">Articles</span>
-                        <span class="duration">22 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Communication -->
-            <div class="nav-category">
-                <h3><i class="fas fa-comments"></i> Communication (A1)</h3>
-                <ul>
-                    <li class="nav-item" data-section="8">
-                        <span class="section-number">8</span>
-                        <span class="section-title">Family</span>
-                        <span class="duration">41 min</span>
-                    </li>
-                    <li class="nav-item" data-section="9">
-                        <span class="section-number">9</span>
-                        <span class="section-title">Asking Questions</span>
-                        <span class="duration">26 min</span>
-                    </li>
-                    <li class="nav-item" data-section="10">
-                        <span class="section-number">10</span>
-                        <span class="section-title">Numbers Part 2</span>
-                        <span class="duration">27 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Practical Topics -->
-            <div class="nav-category">
-                <h3><i class="fas fa-map-signs"></i> Practical Topics (A1)</h3>
-                <ul>
-                    <li class="nav-item" data-section="11">
-                        <span class="section-number">11</span>
-                        <span class="section-title">Describing Your City</span>
-                        <span class="duration">30 min</span>
-                    </li>
-                    <li class="nav-item" data-section="12">
-                        <span class="section-number">12</span>
-                        <span class="section-title">Understanding Directions</span>
-                        <span class="duration">34 min</span>
-                    </li>
-                    <li class="nav-item" data-section="13">
-                        <span class="section-number">13</span>
-                        <span class="section-title">Preferences & Activities</span>
-                        <span class="duration">39 min</span>
-                    </li>
-                    <li class="nav-item" data-section="14">
-                        <span class="section-number">14</span>
-                        <span class="section-title">Hotel Booking</span>
-                        <span class="duration">39 min</span>
-                    </li>
-                    <li class="nav-item" data-section="15">
-                        <span class="section-number">15</span>
-                        <span class="section-title">Comprehensive Review</span>
-                        <span class="duration">50 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Real-Life Scenarios -->
-            <div class="nav-category">
-                <h3><i class="fas fa-users"></i> Real-Life Scenarios (A1-A2)</h3>
-                <ul>
-                    <li class="nav-item" data-section="16">
-                        <span class="section-number">16</span>
-                        <span class="section-title">Suggesting an Outing 1</span>
-                        <span class="duration">51 min</span>
-                    </li>
-                    <li class="nav-item" data-section="17">
-                        <span class="section-number">17</span>
-                        <span class="section-title">Suggesting an Outing 2</span>
-                        <span class="duration">40 min</span>
-                    </li>
-                    <li class="nav-item" data-section="18">
-                        <span class="section-number">18</span>
-                        <span class="section-title">Personality & Appearance</span>
-                        <span class="duration">34 min</span>
-                    </li>
-                    <li class="nav-item" data-section="19">
-                        <span class="section-number">19</span>
-                        <span class="section-title">Shopping</span>
-                        <span class="duration">42 min</span>
-                    </li>
-                    <li class="nav-item" data-section="20">
-                        <span class="section-number">20</span>
-                        <span class="section-title">Daily Routine 1</span>
-                        <span class="duration">35 min</span>
-                    </li>
-                    <li class="nav-item" data-section="21">
-                        <span class="section-number">21</span>
-                        <span class="section-title">Daily Routine 2</span>
-                        <span class="duration">39 min</span>
-                    </li>
-                    <li class="nav-item" data-section="22">
-                        <span class="section-number">22</span>
-                        <span class="section-title">Holidays</span>
-                        <span class="duration">39 min</span>
-                    </li>
-                    <li class="nav-item" data-section="23">
-                        <span class="section-number">23</span>
-                        <span class="section-title">At the Doctor's</span>
-                        <span class="duration">28 min</span>
-                    </li>
-                    <li class="nav-item" data-section="24">
-                        <span class="section-number">24</span>
-                        <span class="section-title">Food & Dining</span>
-                        <span class="duration">48 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Advanced Grammar -->
-            <div class="nav-category">
-                <h3><i class="fas fa-graduation-cap"></i> Advanced Grammar (A2)</h3>
-                <ul>
-                    <li class="nav-item" data-section="25">
-                        <span class="section-number">25</span>
-                        <span class="section-title">Giving Advice</span>
-                        <span class="duration">25 min</span>
-                    </li>
-                    <li class="nav-item" data-section="26">
-                        <span class="section-number">26</span>
-                        <span class="section-title">Question Forms</span>
-                        <span class="duration">25 min</span>
-                    </li>
-                    <li class="nav-item" data-section="27">
-                        <span class="section-number">27</span>
-                        <span class="section-title">Future Tense</span>
-                        <span class="duration">25 min</span>
-                    </li>
-                    <li class="nav-item" data-section="28">
-                        <span class="section-number">28</span>
-                        <span class="section-title">Tense Review</span>
-                        <span class="duration">30 min</span>
-                    </li>
-                    <li class="nav-item" data-section="29">
-                        <span class="section-number">29</span>
-                        <span class="section-title">Sentence Construction</span>
-                        <span class="duration">40 min</span>
-                    </li>
-                    <li class="nav-item" data-section="30">
-                        <span class="section-number">30</span>
-                        <span class="section-title">Next Steps</span>
-                        <span class="duration">10 min</span>
-                    </li>
-                </ul>
-            </div>
-
-            <!-- Bonus Section -->
-            <div class="nav-category">
-                <h3><i class="fas fa-heart"></i> Bonus Content</h3>
-                <ul>
-                    <li class="nav-item" data-section="31">
-                        <span class="section-number">31</span>
-                        <span class="section-title">Dating & Fun Phrases</span>
-                        <span class="duration">45 min</span>
-                    </li>
-                    <li class="nav-item" data-section="32">
-                        <span class="section-number">32</span>
-                        <span class="section-title">Slang & Swear Words</span>
-                        <span class="duration">40 min</span>
-                    </li>
-                    <li class="nav-item" data-section="33">
-                        <span class="section-number">33</span>
-                        <span class="section-title">Everyday Native Expressions</span>
-                        <span class="duration">50 min</span>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="sidebar-footer">
-            <button class="theme-toggle" id="themeToggle">
-                <i class="fas fa-moon"></i> Dark Mode
-            </button>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu Toggle -->
-    <button class="mobile-menu-toggle" id="menuToggle">
-        <i class="fas fa-bars"></i>
+<!-- ---------- sidebar ---------- -->
+<nav class="nav" id="nav">
+  <div class="nav__head">
+    <div class="nav__brand">Français <span>A0 → A2</span></div>
+    <div class="nav__progress">
+      <span class="bar"><i id="progFill" style="width:0%"></i></span>
+      <span id="progText">0/33</span>
+    </div>
+  </div>
+  <div class="nav__list" id="navList"></div>
+  <div class="nav__lang">
+    <div class="langswitch langswitch--wide" role="group" aria-label="Display language">
+      <button data-lang="ja">日本語</button><button data-lang="en">English</button>
+    </div>
+  </div>
+  <div class="nav__foot">
+    <button class="btn btn--sm btn--grow" id="navSearchBtn" data-open-search>検索</button>
+    <button class="btn btn--sm btn--grow" id="navCardsBtn" data-open-cards>カード</button>
+    <button class="btn btn--sm btn--grow" id="navGrammarBtn" data-open-grammar>文法</button>
+    <button class="btn btn--sm" data-open-settings aria-label="設定">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
     </button>
+  </div>
+</nav>
+<div class="backdrop" id="backdrop"></div>
 
-    <!-- Mobile Sidebar Backdrop -->
-    <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+<!-- ---------- content ---------- -->
+<div class="app">
+  <main class="main" id="mainWrap">
+    <div class="voicewarn" id="voiceWarn">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+      <span id="voiceWarnText"></span>
+    </div>
+    <div id="main"></div>
+  </main>
+</div>
 
-    <!-- Main Content Area -->
-    <main class="content" id="mainContent">
-        <!-- Content will be loaded dynamically -->
-    </main>
+<!-- ---------- search ---------- -->
+<div class="sheet" id="searchSheet">
+  <div class="sheet__panel">
+    <div class="sheet__head">
+      <h3 id="searchSheetTitle">検索</h3>
+      <button class="icon-btn" data-close-sheet aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet__body">
+      <input class="search-input" id="searchInput" type="search" placeholder="bonjour / hello / こんにちは" autocomplete="off">
+      <div id="searchResults" style="margin-top:1rem"></div>
+    </div>
+  </div>
+</div>
 
-    <!-- Audio Player (hidden) -->
-    <audio id="audioPlayer"></audio>
+<!-- ---------- flashcards ---------- -->
+<div class="sheet" id="fcSheet">
+  <div class="sheet__panel">
+    <div class="sheet__head">
+      <h3 id="fcSheetTitle">フラッシュカード</h3>
+      <button class="icon-btn" data-close-sheet aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet__body" id="fcBody"></div>
+  </div>
+</div>
 
-    <!-- Section Content Files -->
-    <script src="content/section1.js"></script>
-    <script src="content/section2.js"></script>
-    <script src="content/section3.js"></script>
-    <script src="content/section4.js"></script>
-    <script src="content/section5.js"></script>
-    <script src="content/section6.js"></script>
-    <script src="content/section7.js"></script>
-    <script src="content/section8.js"></script>
-    <script src="content/section9.js"></script>
-    <script src="content/section10.js"></script>
-    <script src="content/section11.js"></script>
-    <script src="content/section12.js"></script>
-    <script src="content/section13.js"></script>
-    <script src="content/section14.js"></script>
-    <script src="content/section15.js"></script>
-    <script src="content/section16.js"></script>
-    <script src="content/section17.js"></script>
-    <script src="content/section18.js"></script>
-    <script src="content/section19.js"></script>
-    <script src="content/section20.js"></script>
-    <script src="content/section21.js"></script>
-    <script src="content/section22.js"></script>
-    <script src="content/section23.js"></script>
-    <script src="content/section24.js"></script>
-    <script src="content/section25.js"></script>
-    <script src="content/section26.js"></script>
-    <script src="content/section27.js"></script>
-    <script src="content/section28.js"></script>
-    <script src="content/section29.js"></script>
-    <script src="content/section30.js"></script>
-    <script src="content/section31.js"></script>
-    <script src="content/section32.js"></script>
-    <script src="content/section33.js"></script>
+<!-- ---------- grammar reference ---------- -->
+<div class="sheet" id="gramSheet">
+  <div class="sheet__panel">
+    <div class="sheet__head">
+      <h3 id="gramSheetTitle">文法リファレンス</h3>
+      <button class="icon-btn" data-close-sheet aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet__body" id="gramBody"></div>
+  </div>
+</div>
 
-    <!-- Main Application -->
-    <script src="content.js"></script>
-    <script src="app.js"></script>
+<!-- ---------- settings ---------- -->
+<div class="sheet" id="settingsSheet">
+  <div class="sheet__panel">
+    <div class="sheet__head">
+      <h3 id="settingsSheetTitle">設定</h3>
+      <button class="icon-btn" data-close-sheet aria-label="閉じる">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="sheet__body" id="settingsBody"></div>
+  </div>
+</div>
+
+<!-- ---------- engine ---------- -->
+<script src="js/phonemes.js"></script>
+<script src="js/lexicon.js"></script>
+<script src="js/phonetics.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/store.js"></script>
+<script src="js/render.js"></script>
+<script src="data/grammar.js"></script>
+<script src="js/grammar.js"></script>
+
+<!-- ---------- content ---------- -->
+<script src="data/curriculum.js"></script>
+<script src="data/sections/s01.js"></script>
+<script src="data/sections/s02.js"></script>
+<script src="data/sections/s03.js"></script>
+<script src="data/sections/s04.js"></script>
+<script src="data/sections/s05.js"></script>
+<script src="data/sections/s06.js"></script>
+<script src="data/sections/s07.js"></script>
+<script src="data/sections/s08.js"></script>
+<script src="data/sections/s09.js"></script>
+<script src="data/sections/s10.js"></script>
+<script src="data/sections/s11.js"></script>
+<script src="data/sections/s12.js"></script>
+<script src="data/sections/s13.js"></script>
+<script src="data/sections/s14.js"></script>
+<script src="data/sections/s15.js"></script>
+<script src="data/sections/s16.js"></script>
+<script src="data/sections/s17.js"></script>
+<script src="data/sections/s18.js"></script>
+<script src="data/sections/s19.js"></script>
+<script src="data/sections/s20.js"></script>
+<script src="data/sections/s21.js"></script>
+<script src="data/sections/s22.js"></script>
+<script src="data/sections/s23.js"></script>
+<script src="data/sections/s24.js"></script>
+<script src="data/sections/s25.js"></script>
+<script src="data/sections/s26.js"></script>
+<script src="data/sections/s27.js"></script>
+<script src="data/sections/s28.js"></script>
+<script src="data/sections/s29.js"></script>
+<script src="data/sections/s30.js"></script>
+<script src="data/sections/s31.js"></script>
+<script src="data/sections/s32.js"></script>
+<script src="data/sections/s33.js"></script>
+
+<!-- ---------- english content layer ---------- -->
+<script src="data/en/s01-06.js"></script>
+<script src="data/en/s07-12.js"></script>
+<script src="data/en/s13-18.js"></script>
+<script src="data/en/s19-24.js"></script>
+<script src="data/en/s25-30.js"></script>
+<script src="data/en/s31-33.js"></script>
+<script src="data/en/literals.js"></script>
+
+<script src="js/i18n.js"></script>
+<script src="js/app.js"></script>
 </body>
 </html>

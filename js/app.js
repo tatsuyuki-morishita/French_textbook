@@ -51,6 +51,17 @@
     ipaOn:       { ja: 'IPA（発音記号）',   en: 'IPA' },
     ipaSub:      { ja: '国際音声記号',      en: 'International Phonetic Alphabet' },
     engine:      { ja: '音声エンジン',      en: 'Speech voice' },
+    offline:     { ja: 'オフライン利用',    en: 'Offline use' },
+    offReady:    { ja: '端末に保存済み。通信なしで使えます',
+                   en: 'Saved on this device. Works with no connection' },
+    offSaving:   { ja: '保存中…',           en: 'Saving…' },
+    offInsecure: { ja: 'file:// では保存できません。公開URLから開いてください',
+                   en: 'Not available over file://. Open the published URL instead' },
+    offUnsup:    { ja: 'このブラウザは非対応です',
+                   en: 'This browser does not support it' },
+    offFailed:   { ja: '保存できませんでした', en: 'Could not save' },
+    addHome:     { ja: 'ホーム画面に追加すると全画面で開けます',
+                   en: 'Add to Home Screen to open it full-screen' },
     notFound:    { ja: '未検出',            en: 'not detected' },
     redetect:    { ja: '再検出',            en: 'Re-detect' },
     wipe:        { ja: '学習データを消去',  en: 'Erase learning data' },
@@ -341,6 +352,30 @@
   }
 
   /* ----- settings ----- */
+
+  /* Whether the course is actually stored on the device. Worth stating
+     plainly, because "it will work offline" is not something a user can
+     verify without turning their connection off and hoping. */
+  function offlineRow() {
+    if (!window.Offline) return '';
+    var st = window.Offline.status().state;
+    var text =
+      st === 'ready'      ? t('offReady') :
+      st === 'installing' ? t('offSaving') :
+      st === 'updating'   ? t('offSaving') :
+      st === 'insecure'   ? t('offInsecure') :
+      st === 'unsupported'? t('offUnsup') :
+      st === 'failed'     ? t('offFailed') : t('offSaving');
+
+    var hint = (st === 'ready' && !window.Offline.isStandalone())
+      ? '<span>' + t('addHome') + '</span>' : '';
+
+    return '<div class="setting"><div class="setting__label"><b>' + t('offline') + '</b>' +
+      '<span>' + esc(text) + '</span>' + hint + '</div>' +
+      '<span class="dot dot--' + (st === 'ready' ? 'ok' : st === 'failed' || st === 'unsupported' ? 'bad' : 'wait') + '"></span>' +
+      '</div>';
+  }
+
   function renderSettings() {
     var s = window.Store;
     var theme = s.get('theme');
@@ -381,6 +416,8 @@
       toggle('showKana', t('kanaOn'), t('kanaSub')) +
       toggle('showEnglishReading', t('enReadOn'), t('enReadSub')) +
       toggle('showIPA', t('ipaOn'), t('ipaSub')) +
+
+      offlineRow() +
 
       '<div class="setting"><div class="setting__label"><b>' + t('engine') + '</b><span>' +
         (window.Audio2.status().voiceName || t('notFound')) + '</span></div>' +

@@ -592,7 +592,20 @@
 .setting:last-child { border-bottom: none; }
 .setting__label { flex: 1; }
 .setting__label b { display: block; font-size: 0.92rem; font-weight: 600; }
-.setting__label span { font-size: 0.78rem; color: var(--text-3); }
+/* a row may carry more than one line of hint, so they must not run together */
+.setting__label span { display: block; font-size: 0.78rem; color: var(--text-3); line-height: 1.5; }
+.setting__label span + span { margin-top: 2px; opacity: 0.85; }
+
+.dot {
+  flex: 0 0 auto;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--line-strong);
+}
+.dot--ok   { background: var(--ok); }
+.dot--bad  { background: var(--bad); }
+.dot--wait { background: var(--gold); }
 
 .switch {
   flex: 0 0 auto;
